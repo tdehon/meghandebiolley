@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Meghan de Biolley — Massages & soins
+   Meghan de Biolley, Massages & soins
    Palette: cream, sand and clay, taken from the MB logo.
    ========================================================================== */
 
@@ -1108,4 +1108,162 @@ address {
   padding-top: 1.5rem;
   border-top: 1px solid rgba(250, 246, 241, 0.15);
   font-size: 0.85rem;
+}
+
+/* ---------- Layout variations ---------- */
+
+@media (min-width: 56rem) {
+  .split--top {
+    align-items: start;
+  }
+}
+
+.tagline {
+  margin: 0 0 0.75rem;
+  color: var(--clay-dark);
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-style: italic;
+}
+
+.h3 {
+  font-size: clamp(1.45rem, 2.4vw, 1.75rem);
+}
+
+.menu--compact {
+  margin: 0;
+  max-width: none;
+}
+
+.menu--compact .menu-name {
+  font-size: 1.25rem;
+}
+
+.menu--compact .menu-price {
+  font-size: 1.3rem;
+}
+
+/* Client messages, styled like the chat bubbles they come from */
+.reviews {
+  columns: 1;
+  column-gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .section > .container > .reviews {
+    columns: 2;
+  }
+}
+
+@media (min-width: 64rem) {
+  .section > .container > .reviews {
+    columns: 3;
+  }
+}
+
+.review {
+  break-inside: avoid;
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 22px 22px 22px 6px;
+  background: var(--white);
+  box-shadow: 0 10px 24px -20px rgba(61, 47, 39, 0.5);
+}
+
+.section--sand .review {
+  background: var(--cream);
+}
+
+.review:nth-child(even) {
+  border-radius: 22px 22px 6px 22px;
+}
+
+.review blockquote {
+  margin: 0;
+}
+
+.review p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.review figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  color: var(--muted);
+}
+
+.facts li + li::before {
+  content: "·";
+  margin-right: 1.5rem;
+  color: var(--clay);
+}
+
+.link-list {
+  list-style: none;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--linen);
+}
+
+.link-list a {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--linen);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.link-list a::after {
+  content: "→";
+  color: var(--clay-dark);
+}
+
+.link-list a:hover {
+  color: var(--clay-dark);
+}
+
+.contact-list {
+  list-style: none;
+  margin-top: 2rem;
+  border-top: 1px solid var(--linen);
+}
+
+.contact-list li {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--linen);
+}
+
+.contact-list span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.contact-list a {
+  color: var(--clay-dark);
+  font-weight: 600;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
+}
+
+.page-hero .menu {
+  margin-top: 2rem;
 }

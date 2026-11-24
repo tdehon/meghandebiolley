@@ -1,4 +1,4 @@
-# Meghan de Biolley — site web
+# Meghan de Biolley : site web
 
 Site statique (HTML/CSS) hébergé sur GitHub Pages. Français à la racine, anglais dans `/en`.
 
@@ -22,5 +22,4 @@ Tant qu'un fichier manque, un emplacement beige « MB » s'affiche à sa place.
 
 ## Contenu encore à compléter
 
-Cherchez `class="todo"` dans les fichiers HTML : formations en massage (`a-propos.html`, `en/about.html`)
-et numéro BCE (`mentions-legales.html`, `en/legal-notice.html`). Supprimez la classe `todo` une fois le texte remplacé.
+Cherchez `class="todo"` dans les fichiers HTML : numéro BCE (`mentions-legales.html`, `en/legal-notice.html`). Supprimez la classe `todo` une fois le texte remplacé.
