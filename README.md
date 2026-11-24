@@ -37,6 +37,17 @@ Toutes les pages HTML sont générées par `_outils/build.py`, qui contient les 
 
 Attention : une modification faite directement dans un fichier `.html` sera écrasée au prochain lancement du script. Choisissez l'une ou l'autre méthode.
 
+## Questionnaire « Quel soin pour moi ? »
+
+Page `quel-soin.html` (`en/which-treatment.html`). Les questions sont dans `_outils/build.py` (`QUIZ_TEXT`), les règles dans `js/quiz.js` (fonction `recommend`). Règles actuelles, **à faire valider par Meghan** :
+
+- Jambes lourdes / rétention d'eau → Massage corps drainant.
+- Visage → Soin signature visage ; avec envie de bols et 1 h 30 ou plus → Massage du visage + sonothérapie.
+- Corps → Massage relaxant ; avec envie de bols et 1 h 30 ou plus → Massage du corps + sonothérapie.
+- Corps et visage → 1 h : Massage relaxant ; 1 h 30 : Corps + visage ; 2 h : Duo corps + visage.
+- « Mental qui tourne » + « Pourquoi pas » aux bols compte comme un oui.
+- Une 2e piste est proposée quand elle a du sens (par ex. la version avec bols si la personne répond « Pourquoi pas »).
+
 ## Questions à poser à Meghan
 
 - Ateliers et séances de groupe : combien de temps durent-ils (sound healing, auto-massage, ateliers skincare) ? Y a-t-il un nombre minimum de participants ?

@@ -30,10 +30,10 @@ PODCAST = "https://open.spotify.com/episode/2sFDcMZM7nunfuoGwr982U"
 FILES = {
     "fr": {"home": "index.html", "soins": "soins.html", "ateliers": "ateliers.html",
            "about": "a-propos.html", "contact": "contact.html", "legal": "mentions-legales.html",
-           "gifts": "bons-cadeaux.html"},
+           "gifts": "bons-cadeaux.html", "quiz": "quel-soin.html"},
     "en": {"home": "index.html", "soins": "treatments.html", "ateliers": "workshops.html",
            "about": "about.html", "contact": "contact.html", "legal": "legal-notice.html",
-           "gifts": "gift-vouchers.html"},
+           "gifts": "gift-vouchers.html", "quiz": "which-treatment.html"},
 }
 
 T = {
@@ -43,7 +43,7 @@ T = {
         "book": "Réserver", "tagline": "Massages & soins · Uccle",
         "footer_text": "Massages, soins du visage et sound healing à Uccle, sur rendez-vous.",
         "explore": "Explorer", "contact_h": "Me contacter", "legal": "Mentions légales",
-        "book_online": "Réserver en ligne", "faq": "Questions fréquentes",
+        "book_online": "Réserver en ligne", "faq": "Questions fréquentes", "quiz": "Quel soin pour moi ?",
     },
     "en": {
         "skip": "Skip to content", "menu": "Open menu", "nav_label": "Main navigation",
@@ -51,7 +51,7 @@ T = {
         "book": "Book", "tagline": "Massage & care · Uccle",
         "footer_text": "Massage, facials and sound healing in Uccle, Brussels, by appointment.",
         "explore": "Explore", "contact_h": "Get in touch", "legal": "Legal notice",
-        "book_online": "Book online", "faq": "FAQ",
+        "book_online": "Book online", "faq": "FAQ", "quiz": "Which treatment for me?",
     },
 }
 
@@ -312,6 +312,7 @@ def layout(lang, key, title, description, body, extra_head=""):
         <h2 class="footer-heading">{t["explore"]}</h2>
         <ul class="footer-links">
           {"".join(f'<li><a href="{files[k]}">{label}</a></li>' for k, label in t["nav"])}
+          <li><a href="{files["quiz"]}">{t["quiz"]}</a></li>
           <li><a href="{files["contact"]}#faq">{t["faq"]}</a></li>
         </ul>
       </div>
@@ -423,9 +424,12 @@ def page_home(lang):
             "Massage relaxant à l’huile chaude, drainage lymphatique, massage du visage liftant, ou les deux combinés pour ceux qui ont vraiment besoin de décrocher. Chaque séance commence par un petit moment d’échange pour adapter le soin à ce dont vous avez besoin ce jour-là.",
             "Warm-oil relaxing massage, lymphatic drainage, a lifting facial massage, or a combination of both for when you really need to switch off. Every session starts with a short chat so I can adapt the treatment to what you need that day.")}</p>
         <p class="muted">{S(lang,
-            "Vous hésitez&nbsp;? On peut en parler 15&nbsp;minutes au téléphone, ou envoyez-moi un message sur Instagram.",
-            "Not sure? We can talk it through in a 15-minute call, or send me a message on Instagram.")}</p>
-        <a class="text-link" href="{f["soins"]}">{S(lang, "Le détail de chaque soin", "Details of every treatment")}</a>
+            "Vous hésitez&nbsp;? Répondez à quatre petites questions et je vous propose le soin le plus adapté.",
+            "Not sure? Answer four short questions and I’ll suggest the treatment that suits you best.")}</p>
+        <div class="button-group">
+          <a class="button" href="{f["quiz"]}">{S(lang, "Quel soin est fait pour moi&nbsp;?", "Which treatment is right for me?")}</a>
+          <a class="button button--outline" href="{f["soins"]}">{S(lang, "Le détail de chaque soin", "Details of every treatment")}</a>
+        </div>
       </div>
       <ul class="menu menu--compact">{price_menu(lang, f["soins"])}</ul>
     </div>
@@ -572,6 +576,7 @@ def page_soins(lang):
       <p class="lead">{S(lang,
           "Tous les soins ont lieu chez moi, avenue Hamoir à Uccle. Ils incluent un petit moment d’accueil pour parler de vos besoins avant de commencer.",
           "All treatments take place at my home on Avenue Hamoir in Uccle. Each one includes a short chat beforehand about what you need.")}</p>
+      <p><a class="button button--outline" href="{f["quiz"]}">{S(lang, "Vous hésitez&nbsp;? Trouvez votre soin en 4 questions", "Not sure? Find your treatment in 4 questions")}</a></p>
       <ul class="menu">{price_menu(lang)}</ul>
       <p class="muted small" style="margin-top:1.5rem">{S(lang,
           "Toute séance annulée moins de 48&nbsp;h à l’avance reste due. Paiement en cash, par QR code ou sur facture. <a class='text-link' href='bons-cadeaux.html'>Bons cadeaux</a> disponibles.",
@@ -589,9 +594,10 @@ def page_soins(lang):
       <div>
         <h2>{S(lang, "Vous ne savez pas quoi choisir&nbsp;?", "Not sure which to choose?")}</h2>
         <p>{S(lang,
-            "Réservez un appel de 15&nbsp;minutes et on en discute ensemble. Vous pouvez aussi m’écrire sur Instagram, je réponds toujours.",
-            "Book a 15-minute call and we’ll talk it through. You can also message me on Instagram, I always reply.")}</p>
+            "Faites le petit questionnaire, ou réservez un appel de 15&nbsp;minutes et on en discute ensemble. Vous pouvez aussi m’écrire sur Instagram.",
+            "Try the short questionnaire, or book a 15-minute call and we’ll talk it through. You can also message me on Instagram.")}</p>
         <div class="button-group">
+          <a class="button" href="{f["quiz"]}">{S(lang, "Le questionnaire", "The questionnaire")}</a>
           {ext(CALENDLY + "/30min", S(lang, "Réserver un appel", "Book a call"))}
           {ext(INSTAGRAM, "@meghandebiolley", "button button--outline")}
         </div>
@@ -842,6 +848,24 @@ def page_gifts(lang):
   </section>
 
   <section class="section section--sand">
+    <div class="container split split--reverse">
+      {photo("bon-cadeau-enveloppes.jpg", S(lang, "Bons cadeaux dans des enveloppes kraft fermées par un ruban", "Gift vouchers in kraft envelopes tied with a ribbon"), P("bon-cadeau-enveloppes.jpg"), "photo--arch")}
+      <div>
+        <h2>{S(lang, "Prêt à offrir", "Ready to give")}</h2>
+        <p>{S(lang,
+            "En version papier, le bon est présenté dans une jolie enveloppe kraft fermée par un ruban. Il n’y a plus qu’à le glisser sous le sapin ou à le donner en main propre.",
+            "The printed voucher comes in a pretty kraft envelope tied with a ribbon. All that’s left is to slip it under the tree or hand it over in person.")}</p>
+        <p class="muted">{S(lang,
+            "Pour une surprise de dernière minute, la version électronique est aussi possible.",
+            "For a last-minute surprise, an electronic version is also available.")}</p>
+        <div class="button-group">
+          <a class="button" href="{mailto}">{S(lang, "Commander un bon cadeau", "Order a gift voucher")}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container container--narrow">
       <h2>{S(lang, "Les soins à offrir", "Treatments to give")}</h2>
       <ul class="menu">{price_menu(lang, f["soins"])}</ul>
@@ -857,9 +881,108 @@ def page_gifts(lang):
            body)
 
 
+QUIZ_TEXT = {
+    "fr": {
+        "progress": "Question {n} sur {total}",
+        "back": "← Retour",
+        "restart": "Recommencer",
+        "result_eyebrow": "Mon conseil pour vous",
+        "book": "Réserver ce soin",
+        "details": "Voir le détail",
+        "alt": "Une autre piste&nbsp;:",
+        "call": "Encore un doute&nbsp;? Réservez un appel de 15&nbsp;minutes et on en parle.",
+        "call_btn": "Réserver un appel",
+        "questions": {
+            "reason": {"q": "Qu’est-ce qui vous amène&nbsp;?", "options": [
+                ["relax", "Envie de me détendre, tout simplement"],
+                ["legs", "Jambes lourdes, rétention d’eau, besoin de légèreté"],
+                ["face", "Des tensions au visage ou à la mâchoire, envie d’un coup d’éclat"],
+                ["mind", "Un mental qui tourne en boucle, du mal à lâcher prise"]]},
+            "zone": {"q": "Sur quelle zone avez-vous envie que je travaille&nbsp;?", "options": [
+                ["body", "Le corps"], ["face", "Le visage"], ["both", "Les deux"]]},
+            "time": {"q": "Combien de temps pouvez-vous vous accorder&nbsp;?", "options": [
+                ["60", "1 heure"], ["90", "1 h 30"], ["120", "2 heures"]]},
+            "sound": {"q": "Les sons et vibrations des bols tibétains, ça vous tente&nbsp;?", "options": [
+                ["yes", "Oui, j’ai envie d’essayer"], ["maybe", "Pourquoi pas"], ["no", "Pas cette fois"]]},
+        },
+    },
+    "en": {
+        "progress": "Question {n} of {total}",
+        "back": "← Back",
+        "restart": "Start again",
+        "result_eyebrow": "My suggestion for you",
+        "book": "Book this treatment",
+        "details": "See details",
+        "alt": "Another idea:",
+        "call": "Still not sure? Book a 15-minute call and we’ll talk it through.",
+        "call_btn": "Book a call",
+        "questions": {
+            "reason": {"q": "What brings you here?", "options": [
+                ["relax", "I simply want to relax"],
+                ["legs", "Heavy legs, water retention, I want to feel lighter"],
+                ["face", "Tension in my face or jaw, I’d like a radiance boost"],
+                ["mind", "My mind keeps racing, I find it hard to let go"]]},
+            "zone": {"q": "Which area would you like me to focus on?", "options": [
+                ["body", "My body"], ["face", "My face"], ["both", "Both"]]},
+            "time": {"q": "How much time can you give yourself?", "options": [
+                ["60", "1 hour"], ["90", "1 hr 30"], ["120", "2 hours"]]},
+            "sound": {"q": "Do the sounds and vibrations of Tibetan singing bowls appeal to you?", "options": [
+                ["yes", "Yes, I’d love to try"], ["maybe", "Why not"], ["no", "Not this time"]]},
+        },
+    },
+}
+
+
+def page_quiz(lang):
+    f = FILES[lang]
+    prefix = "" if lang == "fr" else "../"
+    data = {
+        "text": QUIZ_TEXT[lang],
+        "treatments": {
+            s["id"]: {
+                "name": s[lang]["name"], "short": s[lang]["short"],
+                "meta": (s["dur"][lang] + " · " if s["dur"] else "") + s["price"],
+                "img": prefix + "images/" + s["img"],
+                "book": CALENDLY + "/" + s["cal"],
+                "details": f["soins"] + "#" + s["id"],
+            } for s in SOINS
+        },
+        "call": CALENDLY + "/30min",
+    }
+    payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+    body = f'''
+  <section class="page-hero">
+    <div class="container container--narrow">
+      <h1>{S(lang, "Quel soin est fait pour moi&nbsp;?", "Which treatment is right for me?")}</h1>
+      <p class="lead">{S(lang,
+          "Quatre petites questions au maximum, et je vous propose le soin le plus adapté. Vos réponses ne sont enregistrées nulle part.",
+          "Four short questions at most, and I’ll suggest the treatment that suits you best. Your answers aren’t stored anywhere.")}</p>
+
+      <div class="quiz" data-quiz aria-live="polite">
+        <noscript>
+          <p>{S(lang,
+              "Ce questionnaire a besoin de JavaScript. Vous pouvez aussi consulter <a class='text-link' href='soins.html'>tous les soins</a> ou réserver un appel de 15&nbsp;minutes.",
+              "This questionnaire needs JavaScript. You can also browse <a class='text-link' href='treatments.html'>all treatments</a> or book a 15-minute call.")}</p>
+        </noscript>
+      </div>
+
+      <p class="muted small" style="margin-top:2rem">{S(lang,
+          "C’est une première piste&nbsp;: au début de chaque séance, on prend toujours le temps d’adapter le soin à ce dont vous avez besoin ce jour-là.",
+          "It’s a first idea: at the start of every session we always take time to adapt the treatment to what you need that day.")}</p>
+    </div>
+  </section>
+'''
+    extra = (f'\n  <script type="application/json" id="quiz-data">{payload}</script>'
+             f'\n  <script src="{prefix}js/quiz.js" defer></script>')
+    layout(lang, "quiz", S(lang, "Quel soin est fait pour moi ?", "Which treatment is right for me?"),
+           S(lang, "Répondez à quatre questions et découvrez le massage ou le soin du visage le plus adapté à vos envies, à Uccle.",
+             "Answer four questions and find the massage or facial that suits you best, in Uccle, Brussels."),
+           body, extra)
+
+
 FAQ = {
     "fr": [
-        ("Quel soin choisir&nbsp;?", "Les descriptions de la page <a class=\"text-link\" href=\"soins.html\">Les soins</a> vous aideront à y voir plus clair. Si vous hésitez encore, réservez un appel questions-réponses ou écrivez-moi sur Instagram&nbsp;: nous trouverons ensemble le soin le plus adapté."),
+        ("Quel soin choisir&nbsp;?", "Le <a class=\"text-link\" href=\"quel-soin.html\">petit questionnaire</a> vous propose un soin en quatre questions, et les descriptions de la page <a class=\"text-link\" href=\"soins.html\">Les soins</a> vous aideront à y voir plus clair. Si vous hésitez encore, réservez un appel questions-réponses ou écrivez-moi sur Instagram&nbsp;: nous trouverons ensemble le soin le plus adapté."),
         ("Comment réserver&nbsp;?", f"Les soins individuels se réservent en ligne via <a class=\"text-link\" href=\"{CALENDLY}\" target=\"_blank\" rel=\"noopener\">mon calendrier Calendly</a>. Pour un atelier ou une séance de groupe, contactez-moi par e-mail ou par téléphone."),
         ("Comment me préparer à la séance&nbsp;?", "Le parking est gratuit dans la rue. Les soins qui incluent le visage et le cuir chevelu peuvent légèrement huiler les cheveux&nbsp;: mieux vaut ne pas prévoir d’événement important juste après."),
         ("Le soin visage est-il un soin esthétique&nbsp;?", "Non&nbsp;: il n’y a pas d’extraction. Il s’agit d’un massage du visage relaxant, liftant et sculptant, qui apporte un bel éclat et un effet lifté. Pour des résultats plus durables, une cure de 5 séances à tarif avantageux est possible."),
@@ -870,7 +993,7 @@ FAQ = {
         ("Y a-t-il des contre-indications&nbsp;?", "Si vous êtes enceinte, suivez un traitement médical ou avez un problème de santé particulier, signalez-le avant la séance. En cas de doute, demandez l’avis de votre médecin. Les soins proposés sont des soins de bien-être et ne remplacent pas un suivi médical."),
     ],
     "en": [
-        ("Which treatment should I choose?", "The descriptions on the <a class=\"text-link\" href=\"treatments.html\">Treatments</a> page will help. If you’re still unsure, book a Q&amp;A call or message me on Instagram and we’ll find the right treatment together."),
+        ("Which treatment should I choose?", "The <a class=\"text-link\" href=\"which-treatment.html\">short questionnaire</a> suggests a treatment in four questions, and the descriptions on the <a class=\"text-link\" href=\"treatments.html\">Treatments</a> page will help. If you’re still unsure, book a Q&amp;A call or message me on Instagram and we’ll find the right treatment together."),
         ("How do I book?", f"One-to-one treatments are booked online through <a class=\"text-link\" href=\"{CALENDLY}\" target=\"_blank\" rel=\"noopener\">my Calendly page</a>. For a workshop or group session, please get in touch by email or phone."),
         ("How should I prepare?", "Street parking is free. Treatments that include the face and scalp may leave your hair slightly oily, so it’s best not to plan anything important straight afterwards."),
         ("Is the facial a beauty treatment?", "No extractions are involved: it’s a relaxing, lifting and sculpting facial massage that leaves you with a lovely glow and a lifted look. For longer-lasting results, a course of 5 sessions at a reduced rate is available."),
@@ -1004,6 +1127,7 @@ for lang in ("fr", "en"):
     page_about(lang)
     page_contact(lang)
     page_gifts(lang)
+    page_quiz(lang)
     page_legal(lang)
 
 # 404 (served by GitHub Pages from any path, so use root-relative URLs)

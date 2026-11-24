@@ -1414,3 +1414,104 @@ address {
 .section--sand .price-tag {
   background: var(--cream);
 }
+
+/* ---------- "Quel soin pour moi ?" questionnaire ---------- */
+
+.quiz {
+  margin-top: 2rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.quiz-progress {
+  margin-bottom: 0.5rem;
+  color: var(--clay-dark);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.quiz-question {
+  margin-bottom: 1.25rem;
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+}
+
+.quiz-question:focus {
+  outline: none;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.quiz-option {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--linen);
+  border-radius: var(--radius);
+  background: var(--cream);
+  color: var(--cocoa);
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.quiz-option:hover,
+.quiz-option:focus-visible {
+  border-color: var(--clay);
+  background: var(--sand);
+}
+
+.quiz-back {
+  margin: 1.25rem 1.25rem 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  cursor: pointer;
+}
+
+.quiz-back:hover {
+  color: var(--cocoa);
+}
+
+.quiz-result {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (min-width: 40rem) {
+  .quiz-result {
+    grid-template-columns: 12rem 1fr;
+  }
+}
+
+.quiz-result .photo {
+  max-width: 14rem;
+}
+
+.quiz-result .eyebrow {
+  margin-bottom: 0.5rem;
+}
+
+.quiz-alt {
+  margin: 1.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linen);
+}
+
+.quiz-call {
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+}
