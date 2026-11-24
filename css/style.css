@@ -1331,12 +1331,81 @@ address {
   cursor: pointer;
 }
 
+.treatment-book--phone {
+  display: none;
+}
+
+/* Phones: small portrait photo beside the title, price and button;
+   the description runs full width underneath. */
 @media (max-width: 55.99rem) {
   .treatment {
     padding: 2rem 0;
   }
 
   .treatment .split {
-    gap: 1.25rem;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 1.25rem 1rem;
+  }
+
+  .treatment-info {
+    display: contents;
+  }
+
+  .treatment .photo {
+    grid-column: 1;
+    max-width: none;
+  }
+
+  .treatment-head {
+    grid-column: 2;
+    align-self: center;
+  }
+
+  .treatment-head h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.45rem;
+  }
+
+  .treatment-head .price-tag {
+    margin-bottom: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .treatment-head .price-tag strong {
+    font-size: 1.15rem;
+  }
+
+  .treatment-book--phone {
+    display: inline-flex;
+    min-height: 2.5rem;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.85rem;
+  }
+
+  .treatment-body {
+    grid-column: 1 / -1;
+  }
+
+  .treatment-book--desktop {
+    display: none;
+  }
+}
+
+/* Very small phones (320 px): let the name wrap so the header fits */
+@media (max-width: 22rem) {
+  .brand {
+    gap: 0.5rem;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+    line-height: 1.05;
+    white-space: normal;
+    max-width: 5.5rem;
+  }
+
+  .header-book {
+    padding: 0.4rem 0.8rem;
   }
 }

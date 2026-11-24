@@ -530,12 +530,17 @@ def page_soins(lang):
       <article class="treatment" id="{s["id"]}">
         <div class="split{rev}">
           {photo(s["img"], d["name"], P(s["img"]), "photo--arch")}
-          <div>
-            <h2>{d["name"]}</h2>
-            <p class="price-tag">{dur}<strong>{s["price"]}</strong></p>
-            {soin_text(d, lang)}
-            <div class="button-group">
-              {ext(CALENDLY + "/" + s["cal"], S(lang, "Réserver ce soin", "Book this treatment"))}
+          <div class="treatment-info">
+            <div class="treatment-head">
+              <h2>{d["name"]}</h2>
+              <p class="price-tag">{dur}<strong>{s["price"]}</strong></p>
+              {ext(CALENDLY + "/" + s["cal"], S(lang, "Réserver", "Book"), "button treatment-book--phone")}
+            </div>
+            <div class="treatment-body">
+              {soin_text(d, lang)}
+              <div class="button-group treatment-book--desktop">
+                {ext(CALENDLY + "/" + s["cal"], S(lang, "Réserver ce soin", "Book this treatment"))}
+              </div>
             </div>
           </div>
         </div>
