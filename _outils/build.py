@@ -39,7 +39,7 @@ FILES = {
 T = {
     "fr": {
         "skip": "Aller au contenu", "menu": "Ouvrir le menu", "nav_label": "Navigation principale",
-        "nav": [("soins", "Les soins"), ("ateliers", "Ateliers & entreprises"), ("gifts", "Bons cadeaux"), ("about", "À propos"), ("contact", "Contact")],
+        "nav": [("soins", "Les soins"), ("ateliers", "EVJF, ateliers & entreprises"), ("gifts", "Bons cadeaux"), ("about", "À propos"), ("contact", "Contact")],
         "book": "Réserver", "tagline": "Massages & soins · Uccle",
         "footer_text": "Massages, soins du visage et sound healing à Uccle, sur rendez-vous.",
         "explore": "Explorer", "contact_h": "Me contacter", "legal": "Mentions légales",
@@ -47,7 +47,7 @@ T = {
     },
     "en": {
         "skip": "Skip to content", "menu": "Open menu", "nav_label": "Main navigation",
-        "nav": [("soins", "Treatments"), ("ateliers", "Workshops & corporate"), ("gifts", "Gift vouchers"), ("about", "About"), ("contact", "Contact")],
+        "nav": [("soins", "Treatments"), ("ateliers", "Hen parties & corporate"), ("gifts", "Gift vouchers"), ("about", "About"), ("contact", "Contact")],
         "book": "Book", "tagline": "Massage & care · Uccle",
         "footer_text": "Massage, facials and sound healing in Uccle, Brussels, by appointment.",
         "explore": "Explore", "contact_h": "Get in touch", "legal": "Legal notice",
@@ -487,11 +487,12 @@ def page_home(lang):
     <div class="container split split--reverse">
       {photo("sonotherapie.jpg", S(lang, "Meghan assise devant ses bols tibétains, un carillon à la main", "Meghan sitting by her Tibetan bowls, holding a chime"), P("sonotherapie.jpg"), "photo--wide")}
       <div>
-        <h2>{S(lang, "Ateliers, sound healing et entreprises", "Workshops, sound healing and companies")}</h2>
+        <h2>{S(lang, "EVJF, ateliers et entreprises", "Hen parties, workshops and companies")}</h2>
         <p>{S(lang,
-            "Je fais aussi des séances de sound healing chez moi (6 personnes max) ou partout en Belgique, des ateliers d’auto-massage pour les EVJF et les anniversaires, et des moments bien-être pour les équipes et les marques.",
-            "I also run sound healing sessions at my place (up to 6 people) or anywhere in Belgium, self-massage workshops for hen parties and birthdays, and wellbeing moments for teams and brands.")}</p>
+            "J’anime aussi des EVJF et des anniversaires (atelier auto-massage ou sound healing), des séances de sound healing chez moi (6 personnes max) ou partout en Belgique, et des moments bien-être pour les équipes et les marques.",
+            "I also host hen parties and birthdays (self-massage workshop or sound healing), sound healing sessions at my place (up to 6 people) or anywhere in Belgium, and wellbeing moments for teams and brands.")}</p>
         <ul class="link-list">
+          <li><a href="{f["ateliers"]}#evjf">{S(lang, "Pour un EVJF", "For a hen party")}</a></li>
           <li><a href="{f["ateliers"]}#entreprises">{S(lang, "Pour les entreprises", "For companies")}</a></li>
           <li><a href="{f["ateliers"]}#sonotherapie-groupe">{S(lang, "Sound healing en groupe, 25 € / pers.", "Group sound healing, €25 per person")}</a></li>
           <li><a href="{f["ateliers"]}#auto-massage">{S(lang, "Atelier auto-massage, 50 € / pers.", "Self-massage workshop, €50 per person")}</a></li>
@@ -614,18 +615,43 @@ def page_ateliers(lang):
     body = f'''
   <section class="page-hero">
     <div class="container container--narrow">
-      <h1>{S(lang, "Ateliers et événements, pour les particuliers et les entreprises", "Workshops and events, for private groups and companies")}</h1>
+      <h1>{S(lang, "EVJF, ateliers et bien-être en entreprise", "Hen parties, workshops and corporate wellbeing")}</h1>
       <p class="lead">{S(lang,
-          "Sound healing, atelier d’auto-massage, massages au bureau ou animation pour une marque&nbsp;: je viens chez vous, partout en Belgique, ou je vous reçois chez moi à Uccle.",
-          "Sound healing, self-massage workshops, massages at the office or wellbeing moments for a brand: I come to you anywhere in Belgium, or welcome you at my place in Uccle.")}</p>
+          "Un EVJF qui sort de l’ordinaire, un team building, une pause bien-être au bureau ou une animation pour une marque&nbsp;: je viens chez vous, partout en Belgique, ou je vous reçois chez moi à Uccle.",
+          "A hen party with a difference, team building, a wellbeing break at the office or a brand event: I come to you anywhere in Belgium, or welcome you at my place in Uccle.")}</p>
       <div class="button-group">
-        <a class="button" href="#entreprises">{S(lang, "Entreprises", "Companies")}</a>
+        <a class="button" href="#evjf">{S(lang, "EVJF", "Hen parties")}</a>
+        <a class="button button--outline" href="#entreprises">{S(lang, "Entreprises", "Companies")}</a>
         <a class="button button--outline" href="#sonotherapie-groupe">{S(lang, "Entre amis ou en famille", "Friends & family")}</a>
       </div>
     </div>
   </section>
 
-  <section class="section section--sand" id="entreprises">
+  <section class="section section--sand" id="evjf">
+    <div class="container split">
+      {photo("evjf.jpg", S(lang, "Longue table préparée pour un atelier entre amies, avec miroirs et produits de soin", "Long table set for a workshop with friends, with mirrors and skincare products"), P("evjf.jpg"), "photo--arch")}
+      <div>
+        <h2>{S(lang, "Pour un EVJF", "For a hen party")}</h2>
+        <p>{S(lang,
+            "Offrez à la future mariée et à ses amies un vrai moment de détente, à partager. Je viens dans le lieu de votre choix, partout en Belgique, avec tout le matériel.",
+            "Give the bride-to-be and her friends a truly relaxing moment to share. I come to the venue of your choice, anywhere in Belgium, with everything needed.")}</p>
+        <p>{S(lang, "Deux formules au choix&nbsp;:", "Two options:")}</p>
+        <ul class="link-list">
+          <li><a href="#auto-massage">{S(lang, "Atelier auto-massage, 50 € / pers. + déplacement", "Self-massage workshop, €50 per person + travel")}</a></li>
+          <li><a href="#sonotherapie-groupe">{S(lang, "Sound healing en groupe, 25 € / pers. + déplacement", "Group sound healing, €25 per person + travel")}</a></li>
+        </ul>
+        <p class="muted" style="margin-top:1.25rem">{S(lang,
+            "Dites-moi la date, le lieu et le nombre de participantes, et je vous envoie une proposition.",
+            "Tell me the date, the place and the number of guests, and I’ll send you a proposal.")}</p>
+        <div class="button-group">
+          <a class="button" href="mailto:{EMAIL}?subject={q(S(lang, 'EVJF', 'Hen party'))}">{S(lang, "Organiser un EVJF", "Plan a hen party")}</a>
+          <a class="button button--outline" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="entreprises">
     <div class="container">
       <div class="split split--top">
         <div>
@@ -661,7 +687,7 @@ def page_ateliers(lang):
     </div>
   </section>
 
-  <section class="section" id="sonotherapie-groupe">
+  <section class="section section--sand" id="sonotherapie-groupe">
     <div class="container split">
       {photo("atelier-sonotherapie.jpg", S(lang, "Séance de sound healing en groupe : Meghan joue d’un bol au-dessus des participantes allongées", "Group sound healing: Meghan plays a bowl above participants lying down"), P("atelier-sonotherapie.jpg"), "photo--arch")}
       <div>
@@ -681,7 +707,7 @@ def page_ateliers(lang):
     </div>
   </section>
 
-  <section class="section section--sand" id="auto-massage">
+  <section class="section" id="auto-massage">
     <div class="container split split--reverse">
       {photo("atelier-auto-massage.jpg", S(lang, "Meghan montre un geste de massage du visage pendant un atelier", "Meghan showing a facial massage technique during a workshop"), P("atelier-auto-massage.jpg"), "photo--arch")}
       <div>
@@ -700,7 +726,7 @@ def page_ateliers(lang):
     </div>
   </section>
 
-  <section class="section" id="eclosion">
+  <section class="section section--sand" id="eclosion">
     <div class="container split">
       <div>
         <h2>{S(lang, "Éclosion, ma retraite d’un jour", "Éclosion, my one-day retreat")}</h2>
@@ -717,7 +743,7 @@ def page_ateliers(lang):
     </div>
   </section>
 
-  <section class="section section--sand section--tight">
+  <section class="section section--tight">
     <div class="container container--narrow text-center">
       <p class="lead">{S(lang,
           "Dites-moi la date, le lieu et le nombre de personnes, et je vous envoie une proposition.",
@@ -729,9 +755,9 @@ def page_ateliers(lang):
     </div>
   </section>
 '''
-    layout(lang, "ateliers", S(lang, "Ateliers, sound healing et bien-être en entreprise", "Workshops, sound healing and corporate wellbeing"),
-           S(lang, "Sound healing en groupe, ateliers d’auto-massage pour EVJF et anniversaires, massages et team building pour les entreprises, ateliers skincare et événements de marque, partout en Belgique.",
-             "Group sound healing, self-massage workshops for hen parties and birthdays, massages and team building for companies, skincare workshops and brand events, anywhere in Belgium."),
+    layout(lang, "ateliers", S(lang, "EVJF, ateliers et bien-être en entreprise", "Hen parties, workshops and corporate wellbeing"),
+           S(lang, "EVJF bien-être (atelier auto-massage, sound healing), team building et massages en entreprise, ateliers skincare et événements de marque, partout en Belgique.",
+             "Wellbeing hen parties (self-massage workshop, sound healing), team building and massages for companies, skincare workshops and brand events, anywhere in Belgium."),
            body)
 
 
