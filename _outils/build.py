@@ -438,7 +438,26 @@ def page_home(lang):
     </div>
   </section>
 
-  <section class="section section--sand">
+  <section class="section section--sand gift-band">
+    <div class="container split split--reverse">
+      {photo("bon-cadeau.jpg", S(lang, "Bons cadeaux « Un massage pour toi ! » par Meghan de Biolley, posés à côté de tulipes jaunes", "“Un massage pour toi !” gift vouchers by Meghan de Biolley, next to yellow tulips"), P("bon-cadeau.jpg"), "photo--arch")}
+      <div>
+        <h2>{S(lang, "Offrez un massage", "Give a massage")}</h2>
+        <p class="price-tag"><span>{S(lang, "À partir de", "From")}</span><strong>90 €</strong></p>
+        <p>{S(lang,
+            "Pour Noël, un anniversaire, une naissance ou juste pour dire merci&nbsp;: un bon cadeau pour le soin de votre choix, en version papier ou électronique.",
+            "For Christmas, a birthday, a new baby or just to say thank you: a gift voucher for the treatment of your choice, printed or electronic.")}</p>
+        <p class="muted">{S(lang,
+            "Ils se commandent directement auprès de moi, par e-mail, téléphone ou Instagram.",
+            "Order directly from me by email, phone or Instagram.")}</p>
+        <div class="button-group">
+          <a class="button" href="{f["gifts"]}">{S(lang, "Offrir un bon cadeau", "Give a gift voucher")}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container split">
       {photo("portrait.jpg", S(lang, "Portrait de Meghan de Biolley", "Portrait of Meghan de Biolley"), P("portrait.jpg"), "photo--arch")}
       <div>
@@ -464,7 +483,7 @@ def page_home(lang):
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--sand">
     <div class="container split split--reverse">
       {photo("sonotherapie.jpg", S(lang, "Meghan assise devant ses bols tibétains, un carillon à la main", "Meghan sitting by her Tibetan bowls, holding a chime"), P("sonotherapie.jpg"), "photo--wide")}
       <div>
@@ -476,13 +495,12 @@ def page_home(lang):
           <li><a href="{f["ateliers"]}#entreprises">{S(lang, "Pour les entreprises", "For companies")}</a></li>
           <li><a href="{f["ateliers"]}#sonotherapie-groupe">{S(lang, "Sound healing en groupe, 25 € / pers.", "Group sound healing, €25 per person")}</a></li>
           <li><a href="{f["ateliers"]}#auto-massage">{S(lang, "Atelier auto-massage, 50 € / pers.", "Self-massage workshop, €50 per person")}</a></li>
-          <li><a href="{f["gifts"]}">{S(lang, "Offrir un bon cadeau", "Give a gift voucher")}</a></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="section section--sand section--tight">
+  <section class="section section--tight">
     <div class="container text-center">
       {facts(lang)}
       <div class="button-group button-group--center">
@@ -793,7 +811,7 @@ def page_gifts(lang):
           {ext(INSTAGRAM, "Instagram", "button button--outline")}
         </div>
       </div>
-      {photo("bon-cadeau.jpg", S(lang, "Produits de soin et bougies dans l’espace de soin", "Skincare products and candles in the treatment room"), P("bon-cadeau.jpg"), "photo--arch", eager=True)}
+      {photo("bon-cadeau.jpg", S(lang, "Bons cadeaux « Un massage pour toi ! » par Meghan de Biolley, posés à côté de tulipes jaunes", "“Un massage pour toi !” gift vouchers by Meghan de Biolley, next to yellow tulips"), P("bon-cadeau.jpg"), "photo--arch", eager=True)}
     </div>
   </section>
 

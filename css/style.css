@@ -1409,3 +1409,8 @@ address {
     padding: 0.4rem 0.8rem;
   }
 }
+
+/* Price pill stays visible on sand-coloured sections */
+.section--sand .price-tag {
+  background: var(--cream);
+}
