@@ -16,9 +16,11 @@ Tant qu'un fichier manque, un emplacement beige « MB » s'affiche à sa place.
 | `en-seance-1.jpg`, `en-seance-2.jpg`, `en-seance-3.jpg` | Accueil, galerie « en séance » | portrait (3:4) |
 | `soin-visage.jpg`, `massage-drainant.jpg`, `massage-relaxant.jpg`, `corps-visage.jpg`, `duo-corps-visage.jpg`, `visage-sonotherapie.jpg`, `corps-sonotherapie.jpg` | Une par soin | portrait (4:5) |
 | `atelier-sonotherapie.jpg`, `atelier-auto-massage.jpg` | Page Ateliers | portrait (4:5) |
+| `eclosion.jpg` | Page Ateliers, retraites Éclosion | paysage (4:3) |
+| `bon-cadeau.jpg` | Page Bons cadeaux + Accueil (photo du bon) | portrait (4:5) |
 | `og-image.jpg` | Aperçu quand le lien est partagé (WhatsApp, Facebook…) | 1200×630 |
 
 ## Contenu encore à compléter
 
-Cherchez `class="todo"` dans les fichiers HTML : formations/certifications (`a-propos.html`, `en/about.html`)
+Cherchez `class="todo"` dans les fichiers HTML : formations en massage (`a-propos.html`, `en/about.html`)
 et numéro BCE (`mentions-legales.html`, `en/legal-notice.html`). Supprimez la classe `todo` une fois le texte remplacé.

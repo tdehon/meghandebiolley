@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    window.matchMedia("(min-width: 60rem)").addEventListener("change", (event) => {
+    window.matchMedia("(min-width: 72rem)").addEventListener("change", (event) => {
       if (event.matches) setOpen(false);
     });
   }
