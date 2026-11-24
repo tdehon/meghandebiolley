@@ -81,6 +81,11 @@ def photo(src, alt, placeholder, cls="", eager=False):
             f'<img src="{{IMG}}{src}" alt="{escape(alt)}" {loading}></div>')
 
 
+def video(src, poster, label):
+    return (f'<div class="photo photo--arch"><video src="{{IMG}}{src}" poster="{{IMG}}{poster}" '
+            f'autoplay muted loop playsinline preload="metadata" aria-label="{escape(label)}"></video></div>')
+
+
 def ext(url, label, cls="button"):
     return f'<a class="{cls}" href="{url}" target="_blank" rel="noopener">{label}</a>'
 
@@ -404,7 +409,7 @@ def page_home(lang):
           <a class="button button--outline" href="{f["soins"]}">{S(lang, "Voir les soins et les prix", "Treatments & prices")}</a>
         </div>
       </div>
-      {photo("hero.jpg", S(lang, "Meghan de Biolley pendant un massage", "Meghan de Biolley giving a massage"), P("hero.jpg"), "photo--arch", eager=True)}
+      {photo("hero.jpg", S(lang, "Meghan pendant un massage dans son espace de soin", "Meghan giving a massage in her treatment room"), P("hero.jpg"), "photo--arch", eager=True)}
     </div>
   </section>
 
@@ -450,16 +455,16 @@ def page_home(lang):
   <section class="section section--tight">
     <div class="container">
       <div class="gallery">
-        {photo("en-seance-1.jpg", S(lang, "Meghan pendant un soin", "Meghan during a treatment"), P("en-seance-1.jpg"))}
-        {photo("en-seance-2.jpg", S(lang, "Détail d’un massage", "Massage detail"), P("en-seance-2.jpg"))}
-        {photo("en-seance-3.jpg", S(lang, "L’espace de soin", "The treatment room"), P("en-seance-3.jpg"))}
+        {photo("en-seance-1.jpg", S(lang, "Grange préparée pour une retraite Éclosion, tapis et briques de yoga", "Barn set up for an Éclosion retreat, with mats and yoga blocks"), P("en-seance-1.jpg"))}
+        {photo("en-seance-2.jpg", S(lang, "Table préparée pour un atelier skincare, miroirs et produits", "Table set for a skincare workshop, with mirrors and products"), P("en-seance-2.jpg"))}
+        {photo("en-seance-3.jpg", S(lang, "Meghan, souriante, face à un cercle de participantes assises", "Meghan smiling in front of a circle of seated participants"), P("en-seance-3.jpg"))}
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container split split--reverse">
-      {photo("sonotherapie.jpg", S(lang, "Bols tibétains préparés pour une séance de sound healing", "Tibetan bowls set up for a sound healing session"), P("sonotherapie.jpg"), "photo--wide")}
+      {photo("sonotherapie.jpg", S(lang, "Meghan assise devant ses bols tibétains, un carillon à la main", "Meghan sitting by her Tibetan bowls, holding a chime"), P("sonotherapie.jpg"), "photo--wide")}
       <div>
         <h2>{S(lang, "Ateliers, sound healing et entreprises", "Workshops, sound healing and companies")}</h2>
         <p>{S(lang,
@@ -601,9 +606,12 @@ def page_ateliers(lang):
             <a class="button button--outline" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
           </div>
         </div>
-        <aside class="note">
+        <aside>
+          {photo("entreprises.jpg", S(lang, "Meghan pendant un atelier de massage du visage pour Delbôve", "Meghan during a facial massage workshop for Delbôve"), P("entreprises.jpg"), "photo--arch")}
+          <div class="note" style="margin-top:1.5rem">
           <p><strong>{S(lang, "Elles m’ont fait confiance", "Brands I’ve worked with")}</strong></p>
           <p>Sisley Paris, Avène, Delbôve, {S(lang, "et Arvesta pour son Ladies Day à l’Abbaye de Floreffe, où j’ai animé un atelier skincare pour des agricultrices.", "and Arvesta for its Ladies Day at Floreffe Abbey, where I ran a skincare workshop for women farmers.")}</p>
+          </div>
         </aside>
       </div>
     </div>
@@ -611,7 +619,7 @@ def page_ateliers(lang):
 
   <section class="section" id="sonotherapie-groupe">
     <div class="container split">
-      {photo("atelier-sonotherapie.jpg", S(lang, "Séance de sound healing en groupe", "Group sound healing session"), P("atelier-sonotherapie.jpg"), "photo--arch")}
+      {photo("atelier-sonotherapie.jpg", S(lang, "Séance de sound healing en groupe : Meghan joue d’un bol au-dessus des participantes allongées", "Group sound healing: Meghan plays a bowl above participants lying down"), P("atelier-sonotherapie.jpg"), "photo--arch")}
       <div>
         <h2>{S(lang, "Sound healing en groupe", "Group sound healing")}</h2>
         <p class="price-tag"><strong>{S(lang, "25 €", "€25")}</strong>{S(lang, "par personne", "per person")}</p>
@@ -631,7 +639,7 @@ def page_ateliers(lang):
 
   <section class="section section--sand" id="auto-massage">
     <div class="container split split--reverse">
-      {photo("atelier-auto-massage.jpg", S(lang, "Atelier d’auto-massage entre amies", "Self-massage workshop with friends"), P("atelier-auto-massage.jpg"), "photo--arch")}
+      {photo("atelier-auto-massage.jpg", S(lang, "Meghan montre un geste de massage du visage pendant un atelier", "Meghan showing a facial massage technique during a workshop"), P("atelier-auto-massage.jpg"), "photo--arch")}
       <div>
         <h2>{S(lang, "Atelier auto-massage", "Self-massage workshop")}</h2>
         <p class="price-tag"><strong>{S(lang, "50 €", "€50")}</strong>{S(lang, "par personne + déplacement", "per person + travel")}</p>
@@ -661,7 +669,7 @@ def page_ateliers(lang):
           {ext(INSTAGRAM, S(lang, "Les prochaines dates sont annoncées sur Instagram", "Next dates are announced on Instagram"), "button button--outline")}
         </div>
       </div>
-      {photo("eclosion.jpg", S(lang, "Retraite Éclosion", "Éclosion retreat"), P("eclosion.jpg"), "photo--wide")}
+      {photo("eclosion.jpg", S(lang, "Meghan avec le tote bag Éclosion", "Meghan with the Éclosion tote bag"), P("eclosion.jpg"), "photo--arch")}
     </div>
   </section>
 
@@ -707,7 +715,7 @@ def page_about(lang):
 
   <section class="section section--sand">
     <div class="container split split--reverse">
-      {photo("espace.jpg", S(lang, "L’espace de soin à Uccle", "The treatment room in Uccle"), P("espace.jpg"), "photo--wide")}
+      {video("espace.mp4", "espace-poster.jpg", S(lang, "Courte vidéo de l’espace de soin à Uccle", "Short video of the treatment room in Uccle"))}
       <div>
         <h2>{S(lang, "Formations et expériences", "Training and experience")}</h2>
         <ul class="check-list">
@@ -759,7 +767,7 @@ def page_gifts(lang):
           {ext(INSTAGRAM, "Instagram", "button button--outline")}
         </div>
       </div>
-      {photo("bon-cadeau.jpg", S(lang, "Bon cadeau Meghan de Biolley", "Meghan de Biolley gift voucher"), P("bon-cadeau.jpg"), "photo--arch", eager=True)}
+      {photo("bon-cadeau.jpg", S(lang, "Produits de soin et bougies dans l’espace de soin", "Skincare products and candles in the treatment room"), P("bon-cadeau.jpg"), "photo--arch", eager=True)}
     </div>
   </section>
 

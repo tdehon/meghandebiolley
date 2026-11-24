@@ -18,6 +18,14 @@ function watchPhoto(img) {
 
 document.querySelectorAll(".photo img").forEach(watchPhoto);
 
+/* Respect "reduce motion": keep looping videos on their first frame. */
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  document.querySelectorAll("video[autoplay]").forEach((video) => {
+    video.removeAttribute("autoplay");
+    video.pause();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   /* Mobile menu */
   const menuButton = document.querySelector("[data-menu-toggle]");
