@@ -18,6 +18,16 @@ function watchPhoto(img) {
 
 document.querySelectorAll(".photo img").forEach(watchPhoto);
 
+/* Treatment details: fully open on wide screens, folded on phones. */
+const wide = window.matchMedia("(min-width: 56rem)");
+const syncDetails = () => {
+  document.querySelectorAll("details[data-open-desktop]").forEach((el) => {
+    el.open = wide.matches;
+  });
+};
+syncDetails();
+wide.addEventListener("change", syncDetails);
+
 /* Respect "reduce motion": keep looping videos on their first frame. */
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   document.querySelectorAll("video[autoplay]").forEach((video) => {

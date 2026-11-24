@@ -406,10 +406,6 @@ ul {
     font-size: 1.05rem;
   }
 
-  .primary-nav li:last-child {
-    margin-top: 1.25rem;
-  }
-
   .primary-nav .button {
     width: 100%;
   }
@@ -1268,4 +1264,86 @@ address {
 
 .page-hero .menu {
   margin-top: 2rem;
+}
+
+/* ---------- Phones and tablets: Book button always visible ---------- */
+
+.header-book,
+.nav-lang {
+  display: none;
+}
+
+@media (max-width: 71.99rem) {
+  .header-tools {
+    gap: 0.6rem;
+  }
+
+  .header-book {
+    display: inline-flex;
+    min-height: 2.5rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .primary-nav .nav-book {
+    display: none;
+  }
+}
+
+@media (max-width: 30rem) {
+  .header-tools > .lang-switch {
+    display: none;
+  }
+
+  .primary-nav .nav-lang {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .primary-nav .nav-lang a:not(.button) {
+    display: inline;
+    padding: 0;
+    border: 0;
+  }
+
+  .menu-toggle {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+/* ---------- Treatments page: lighter on small screens ---------- */
+
+@media (min-width: 56rem) {
+  .soin-more > summary {
+    display: none;
+  }
+}
+
+.soin-more summary {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--clay-dark);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 55.99rem) {
+  .treatment {
+    padding: 2rem 0;
+  }
+
+  .treatment .split {
+    gap: 1.25rem;
+  }
+
+  .treatment .photo,
+  .treatment .photo.photo--arch {
+    max-width: none;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+  }
 }

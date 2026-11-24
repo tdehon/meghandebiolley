@@ -280,6 +280,7 @@ def layout(lang, key, title, description, body, extra_head=""):
 
     <div class="header-tools">
       <nav class="lang-switch" aria-label="Langue / Language">{lang_switch}</nav>
+      <a class="button header-book" href="{CALENDLY}" target="_blank" rel="noopener">{t["book"]}</a>
       <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-navigation" aria-label="{t["menu"]}">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
@@ -288,7 +289,8 @@ def layout(lang, key, title, description, body, extra_head=""):
     <nav class="primary-nav" id="main-navigation" data-navigation aria-label="{t["nav_label"]}">
       <ul>
         {nav_items}
-        <li><a class="button" href="{CALENDLY}" target="_blank" rel="noopener">{t["book"]}</a></li>
+        <li class="nav-lang lang-switch">{lang_switch}</li>
+        <li class="nav-book"><a class="button" href="{CALENDLY}" target="_blank" rel="noopener">{t["book"]}</a></li>
       </ul>
     </nav>
   </div>
@@ -496,6 +498,26 @@ def page_home(lang):
     layout(lang, "home", title, desc, body)
 
 
+def soin_text(d, lang):
+    """Opening of the description stays visible; the rest folds away on phones."""
+    paras = d["desc"]
+    shown, chars = [], 0
+    for para in paras:
+        if shown and chars >= 180:
+            break
+        shown.append(para)
+        chars += len(para)
+    rest = paras[len(shown):]
+    html = "".join(f"<p>{x}</p>" for x in shown)
+    more = "".join(f"<p>{x}</p>" for x in rest)
+    if d["notes"]:
+        more += '<ul class="soin-notes">' + "".join(f"<li>{n}</li>" for n in d["notes"]) + "</ul>"
+    if more:
+        html += (f'<details class="soin-more" data-open-desktop><summary>{S(lang, "Lire la suite", "Read more")}</summary>'
+                 f'{more}</details>')
+    return html
+
+
 def page_soins(lang):
     f = FILES[lang]
     P = lambda name: S(lang, "Photo : images/", "Photo: images/") + name
@@ -511,8 +533,7 @@ def page_soins(lang):
           <div>
             <h2>{d["name"]}</h2>
             <p class="price-tag">{dur}<strong>{s["price"]}</strong></p>
-            {"".join(f"<p>{p}</p>" for p in d["desc"])}
-            {('<ul class="soin-notes">' + "".join(f"<li>{n}</li>" for n in d["notes"]) + "</ul>") if d["notes"] else ""}
+            {soin_text(d, lang)}
             <div class="button-group">
               {ext(CALENDLY + "/" + s["cal"], S(lang, "Réserver ce soin", "Book this treatment"))}
             </div>
