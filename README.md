@@ -23,3 +23,23 @@ Tant qu'un fichier manque, un emplacement beige « MB » s'affiche à sa place.
 ## Contenu encore à compléter
 
 Cherchez `class="todo"` dans les fichiers HTML : numéro BCE (`mentions-legales.html`, `en/legal-notice.html`). Supprimez la classe `todo` une fois le texte remplacé.
+
+## Modifier le contenu (prix, textes, avis)
+
+Toutes les pages HTML sont générées par `_outils/build.py`, qui contient les textes FR et EN, les soins et prix (`SOINS`), les avis (`REVIEWS`) et la FAQ.
+
+1. Modifiez le texte dans `_outils/build.py`.
+2. Depuis la racine du dépôt, lancez :
+
+   ```bash
+   python3 _outils/build.py
+   ```
+
+3. Committez les fichiers `.html` régénérés.
+
+Attention : une modification faite directement dans un fichier `.html` sera écrasée au prochain lancement du script. Choisissez l'une ou l'autre méthode.
+
+## Questions à poser à Meghan
+
+- Ateliers et séances de groupe : combien de temps durent-ils (sound healing, auto-massage, ateliers skincare) ? Y a-t-il un nombre minimum de participants ?
+- Photos : certaines photos du site ont-elles été prises par un ou une photographe ? Si oui, qui, et faut-il créditer son nom (mentions légales ou sous la photo) ?
