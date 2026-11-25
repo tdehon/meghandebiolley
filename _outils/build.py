@@ -95,6 +95,17 @@ def wa(message):
     return WHATSAPP + "?text=" + quote(message)
 
 
+def contact_buttons(lang, wa_message, email_subject):
+    """WhatsApp (main), Instagram and email. No phone button: for a chat,
+    people can book a 15-minute call on Calendly."""
+    return (
+        ext(wa(wa_message), S(lang, "Envoyer un message sur WhatsApp", "Send a WhatsApp message"))
+        + "\n          " + ext(INSTAGRAM, "Instagram", "button button--outline")
+        + f'\n          <a class="button button--outline" href="mailto:{EMAIL}?subject={quote(email_subject)}">'
+        + S(lang, "Envoyer un e-mail", "Send an email") + "</a>"
+    )
+
+
 def ext(url, label, cls="button"):
     return f'<a class="{cls}" href="{url}" target="_blank" rel="noopener">{label}</a>'
 
@@ -273,11 +284,13 @@ def layout(lang, key, title, description, body, extra_head=""):
   <link rel="alternate" hreflang="fr" href="{alt_fr}">
   <link rel="alternate" hreflang="en" href="{alt_en}">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Meghan de Biolley">
   <meta property="og:title" content="{escape(full_title)}">
   <meta property="og:description" content="{escape(description)}">
   <meta property="og:image" content="{SITE}/images/og-image.jpg">
-  <link rel="icon" href="{prefix}images/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="{prefix}images/favicon.png">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="{prefix}images/favicon.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="{prefix}images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -534,9 +547,22 @@ def page_home(lang):
 '''
     title = S(lang, "Meghan de Biolley | Massages et soins du visage à Uccle",
               "Meghan de Biolley | Massage and facials in Uccle, Brussels")
-    desc = S(lang, "Massage relaxant, drainage lymphatique, soin signature visage et sound healing à Uccle (Bruxelles). Ateliers pour particuliers et entreprises. Réservation en ligne.",
-             "Relaxing massage, lymphatic drainage, signature facial and sound healing in Uccle, Brussels. Workshops for groups and companies. Book online.")
-    layout(lang, "home", title, desc, body)
+    desc = S(lang, "Meghan de Biolley, massothérapeute à Uccle (Bruxelles) : massage relaxant, drainage lymphatique, soin signature visage et sound healing. EVJF, ateliers et entreprises. Réservation en ligne.",
+             "Meghan de Biolley, massage therapist in Uccle, Brussels: relaxing massage, lymphatic drainage, signature facial and sound healing. Bachelorette parties, workshops and companies. Book online.")
+    identity = [
+        {"@context": "https://schema.org", "@type": "WebSite", "name": "Meghan de Biolley",
+         "alternateName": "Meghan de Biolley, massages et soins", "url": SITE + "/",
+         "inLanguage": ["fr", "en"]},
+        {"@context": "https://schema.org", "@type": "HealthAndBeautyBusiness", "name": "Meghan de Biolley",
+         "url": SITE + "/", "logo": SITE + "/images/favicon.png", "image": SITE + "/images/og-image.jpg",
+         "description": desc, "telephone": PHONE_TEL, "priceRange": "90 € - 150 €",
+         "address": {"@type": "PostalAddress", "streetAddress": ADDRESS_STREET, "postalCode": "1180",
+                     "addressLocality": "Uccle", "addressRegion": "Bruxelles", "addressCountry": "BE"},
+         "founder": {"@type": "Person", "name": "Meghan de Biolley", "jobTitle": S(lang, "Massothérapeute", "Massage therapist")},
+         "sameAs": [INSTAGRAM, LINKEDIN, CALENDLY]},
+    ]
+    extra = "".join(f'\n  <script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in identity)
+    layout(lang, "home", title, desc, body, extra)
 
 
 def soin_text(d, lang):
@@ -625,8 +651,8 @@ def page_soins(lang):
   </section>
 '''
     layout(lang, "soins", S(lang, "Soins et prix", "Treatments and prices"),
-           S(lang, "Massage relaxant, massage drainant, soin signature visage, soins corps + visage et sonothérapie : durées, prix et réservation en ligne, à Uccle.",
-             "Relaxing massage, lymphatic drainage, signature facial, body + face treatments and sound therapy: durations, prices and online booking in Uccle, Brussels."),
+           S(lang, "Les soins de Meghan de Biolley à Uccle : massage relaxant, drainage lymphatique, soin signature visage, rituels corps + visage et sonothérapie. Durées, prix et réservation en ligne.",
+             "Meghan de Biolley’s treatments in Uccle, Brussels: relaxing massage, lymphatic drainage, signature facial, body + face rituals and sound therapy. Durations, prices and online booking."),
            body)
 
 
@@ -698,7 +724,6 @@ def page_ateliers(lang):
               "Everything is quoted to fit your space, schedule and budget. Invoicing available, in French, Dutch or English.")}</p>
           <div class="button-group">
             <a class="button" href="{mailto_corp}">{S(lang, "Demander un devis", "Request a quote")}</a>
-            <a class="button button--outline" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
           </div>
         </div>
         <aside>
@@ -779,8 +804,8 @@ def page_ateliers(lang):
   </section>
 '''
     layout(lang, "ateliers", S(lang, "EVJF, ateliers et bien-être en entreprise", "Bachelorette parties, workshops and corporate wellbeing"),
-           S(lang, "EVJF bien-être (atelier auto-massage, sound healing), team building et massages en entreprise, ateliers skincare et événements de marque, partout en Belgique.",
-             "Wellbeing bachelorette and hen parties (self-massage workshop, sound healing), team building and massages for companies, skincare workshops and brand events, anywhere in Belgium."),
+           S(lang, "Meghan de Biolley anime des EVJF bien-être (atelier auto-massage, sound healing), des team buildings et massages en entreprise, des ateliers skincare et événements de marque, partout en Belgique.",
+             "Meghan de Biolley hosts wellbeing bachelorette and hen parties (self-massage workshop, sound healing), team building and massages for companies, skincare workshops and brand events, anywhere in Belgium."),
            body)
 
 
@@ -841,7 +866,9 @@ def page_about(lang):
 def page_gifts(lang):
     f = FILES[lang]
     P = lambda name: S(lang, "Photo : images/", "Photo: images/") + name
-    wa_gift = wa(S(lang, "Bonjour Meghan, je voudrais commander un bon cadeau pour ", "Hi Meghan, I’d like to order a gift voucher for "))
+    gift_contact = contact_buttons(lang,
+                                   S(lang, "Bonjour Meghan, je voudrais commander un bon cadeau pour ", "Hi Meghan, I’d like to order a gift voucher for "),
+                                   S(lang, "Bon cadeau", "Gift voucher"))
     mailto_corp = f"mailto:{EMAIL}?subject=" + quote(S(lang, "Bons cadeaux entreprise", "Corporate gift vouchers"))
     body = f'''
   <section class="page-hero">
@@ -852,12 +879,11 @@ def page_gifts(lang):
             "Pour un anniversaire, une naissance, la fête des mères ou juste pour dire merci&nbsp;: tous les soins peuvent être offerts.",
             "For a birthday, a new baby, Mother’s Day or just to say thank you: every treatment can be given as a gift.")}</p>
         <p>{S(lang,
-            "Les bons se commandent directement auprès de moi, sur WhatsApp. Dites-moi quel soin vous voulez offrir et si vous préférez un bon papier ou un bon électronique (pratique pour les cadeaux de dernière minute). Paiement en cash, par QR code ou sur facture.",
-            "Vouchers are ordered directly from me on WhatsApp. Tell me which treatment you’d like to give and whether you prefer a printed voucher or an electronic one (handy for last-minute gifts). Payment by cash, QR code or invoice.")}</p>
+            "Les bons se commandent directement auprès de moi, de préférence sur WhatsApp, ou via Instagram ou par e-mail. Dites-moi quel soin vous voulez offrir et si vous préférez un bon papier ou un bon électronique (pratique pour les cadeaux de dernière minute). Paiement en cash, par QR code ou sur facture.",
+            "Vouchers are ordered directly from me, preferably on WhatsApp, or via Instagram or email. Tell me which treatment you’d like to give and whether you prefer a printed voucher or an electronic one (handy for last-minute gifts). Payment by cash, QR code or invoice.")}</p>
         <p class="price-tag"><span>{S(lang, "Valable", "Valid for")}</span><strong>{S(lang, "6 mois", "6 months")}</strong></p>
         <div class="button-group">
-          {ext(wa_gift, S(lang, "Commander sur WhatsApp", "Order on WhatsApp"))}
-          {ext(INSTAGRAM, "Instagram", "button button--outline")}
+          {gift_contact}
         </div>
       </div>
       {photo("bon-cadeau.jpg", S(lang, "Bons cadeaux « Un massage pour toi ! » par Meghan de Biolley, posés à côté de tulipes jaunes", "“Un massage pour toi !” gift vouchers by Meghan de Biolley, next to yellow tulips"), P("bon-cadeau.jpg"), "photo--arch", eager=True)}
@@ -876,7 +902,7 @@ def page_gifts(lang):
             "Pour une surprise de dernière minute, la version électronique est aussi possible.",
             "For a last-minute surprise, an electronic version is also available.")}</p>
         <div class="button-group">
-          {ext(wa_gift, S(lang, "Commander sur WhatsApp", "Order on WhatsApp"))}
+          {gift_contact}
         </div>
       </div>
     </div>
@@ -1002,8 +1028,8 @@ def page_quiz(lang):
     extra = (f'\n  <script type="application/json" id="quiz-data">{payload}</script>'
              f'\n  <script src="{prefix}js/quiz.js" defer></script>')
     layout(lang, "quiz", S(lang, "Quel soin est fait pour moi ?", "Which treatment is right for me?"),
-           S(lang, "Répondez à quatre questions et découvrez le massage ou le soin du visage le plus adapté à vos envies, à Uccle.",
-             "Answer four questions and find the massage or facial that suits you best, in Uccle, Brussels."),
+           S(lang, "Répondez à quatre questions et Meghan de Biolley vous conseille le massage ou le soin du visage le plus adapté à vos envies, à Uccle.",
+             "Answer four questions and Meghan de Biolley suggests the massage or facial that suits you best, in Uccle, Brussels."),
            body, extra)
 
 

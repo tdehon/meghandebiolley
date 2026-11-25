@@ -839,13 +839,12 @@ ul {
     grid-template-columns: 1.4fr 1fr 1fr;
   }
 
+  /* Same height for all three photos, whatever their original shape */
+  .gallery .photo,
   .gallery .photo:first-child {
     grid-column: auto;
     aspect-ratio: auto;
-  }
-
-  .gallery .photo {
-    aspect-ratio: 3 / 4;
+    height: clamp(20rem, 36vw, 32rem);
   }
 }
 
