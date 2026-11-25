@@ -46,7 +46,12 @@ Page `quel-soin.html` (`en/which-treatment.html`). Les questions sont dans `_out
 - Corps → Massage relaxant ; avec envie de bols et 1 h 30 ou plus → Massage du corps + sonothérapie.
 - Corps et visage → 1 h : Massage relaxant ; 1 h 30 : Corps + visage ; 2 h : Duo corps + visage.
 - « Mental qui tourne » + « Pourquoi pas » aux bols compte comme un oui.
-- Une 2e piste est proposée quand elle a du sens (par ex. la version avec bols si la personne répond « Pourquoi pas »).
+
+Sous le conseil principal, une 2e option est toujours proposée :
+
+- **« Envie de prolonger le moment ? »** (30 min de plus) : Massage relaxant → Corps + visage, ou Massage du corps + sonothérapie si les bols tentent ; Soin signature visage → Corps + visage, ou Massage du visage + sonothérapie si les bols tentent ; Massage drainant → Corps + visage ; Corps + visage → Duo corps + visage.
+- **« Envie de quelque chose de plus court ? »** (quand le conseil est déjà le soin le plus long) : Duo → Corps + visage ; Corps + sonothérapie → Massage relaxant ; Visage + sonothérapie → Soin signature visage.
+- La différence de durée et de prix est toujours affichée (par ex. « +30 min · +30 € »).
 
 ## Questions à poser à Meghan
 

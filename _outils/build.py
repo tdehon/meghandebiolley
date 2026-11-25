@@ -9,6 +9,7 @@ regenerated .html files. Any change made by hand directly in an .html
 file is overwritten the next time this script runs.
 """
 import json
+import re
 import os
 import sys
 from html import escape
@@ -47,7 +48,7 @@ T = {
     },
     "en": {
         "skip": "Skip to content", "menu": "Open menu", "nav_label": "Main navigation",
-        "nav": [("soins", "Treatments"), ("ateliers", "Hen parties & corporate"), ("gifts", "Gift vouchers"), ("about", "About"), ("contact", "Contact")],
+        "nav": [("soins", "Treatments"), ("ateliers", "Bachelorette & corporate"), ("gifts", "Gift vouchers"), ("about", "About"), ("contact", "Contact")],
         "book": "Book", "tagline": "Massage & care · Uccle",
         "footer_text": "Massage, facials and sound healing in Uccle, Brussels, by appointment.",
         "explore": "Explore", "contact_h": "Get in touch", "legal": "Legal notice",
@@ -223,6 +224,14 @@ def soin_card(s, lang):
 # Layout
 # --------------------------------------------------------------------------
 
+def clean_urls(html):
+    """Links without ".html": GitHub Pages serves /soins.html at /soins.
+    index.html becomes the folder itself ("./", "../", "en/")."""
+    html = re.sub(r'"index\.html(?=["#])', '"./', html)
+    html = re.sub(r'/index\.html(?=["#])', '/', html)
+    return re.sub(r'\.html(?=["#])', '', html)
+
+
 def layout(lang, key, title, description, body, extra_head=""):
     t = T[lang]
     files = FILES[lang]
@@ -337,6 +346,7 @@ def layout(lang, key, title, description, body, extra_head=""):
 </html>
 '''
     html = html.replace("{IMG}", prefix + "images/")
+    html = clean_urls(html)
     out_dir = ROOT if lang == "fr" else os.path.join(ROOT, "en")
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, files[key]), "w", encoding="utf-8") as f:
@@ -491,12 +501,12 @@ def page_home(lang):
     <div class="container split split--reverse">
       {photo("sonotherapie.jpg", S(lang, "Meghan assise devant ses bols tibétains, un carillon à la main", "Meghan sitting by her Tibetan bowls, holding a chime"), P("sonotherapie.jpg"), "photo--wide")}
       <div>
-        <h2>{S(lang, "EVJF, ateliers et entreprises", "Hen parties, workshops and companies")}</h2>
+        <h2>{S(lang, "EVJF, ateliers et entreprises", "Bachelorette parties, workshops and companies")}</h2>
         <p>{S(lang,
             "J’anime aussi des EVJF et des anniversaires (atelier auto-massage ou sound healing), des séances de sound healing chez moi (6 personnes max) ou partout en Belgique, et des moments bien-être pour les équipes et les marques.",
-            "I also host hen parties and birthdays (self-massage workshop or sound healing), sound healing sessions at my place (up to 6 people) or anywhere in Belgium, and wellbeing moments for teams and brands.")}</p>
+            "I also host bachelorette parties and birthdays (self-massage workshop or sound healing), sound healing sessions at my place (up to 6 people) or anywhere in Belgium, and wellbeing moments for teams and brands.")}</p>
         <ul class="link-list">
-          <li><a href="{f["ateliers"]}#evjf">{S(lang, "Pour un EVJF", "For a hen party")}</a></li>
+          <li><a href="{f["ateliers"]}#evjf">{S(lang, "Pour un EVJF", "For a bachelorette party")}</a></li>
           <li><a href="{f["ateliers"]}#entreprises">{S(lang, "Pour les entreprises", "For companies")}</a></li>
           <li><a href="{f["ateliers"]}#sonotherapie-groupe">{S(lang, "Sound healing en groupe, 25 € / pers.", "Group sound healing, €25 per person")}</a></li>
           <li><a href="{f["ateliers"]}#auto-massage">{S(lang, "Atelier auto-massage, 50 € / pers.", "Self-massage workshop, €50 per person")}</a></li>
@@ -621,12 +631,12 @@ def page_ateliers(lang):
     body = f'''
   <section class="page-hero">
     <div class="container container--narrow">
-      <h1>{S(lang, "EVJF, ateliers et bien-être en entreprise", "Hen parties, workshops and corporate wellbeing")}</h1>
+      <h1>{S(lang, "EVJF, ateliers et bien-être en entreprise", "Bachelorette parties, workshops and corporate wellbeing")}</h1>
       <p class="lead">{S(lang,
           "Un EVJF qui sort de l’ordinaire, un team building, une pause bien-être au bureau ou une animation pour une marque&nbsp;: je viens chez vous, partout en Belgique, ou je vous reçois chez moi à Uccle.",
-          "A hen party with a difference, team building, a wellbeing break at the office or a brand event: I come to you anywhere in Belgium, or welcome you at my place in Uccle.")}</p>
+          "A bachelorette party with a difference, team building, a wellbeing break at the office or a brand event: I come to you anywhere in Belgium, or welcome you at my place in Uccle.")}</p>
       <div class="button-group">
-        <a class="button" href="#evjf">{S(lang, "EVJF", "Hen parties")}</a>
+        <a class="button" href="#evjf">{S(lang, "EVJF", "Bachelorette")}</a>
         <a class="button button--outline" href="#entreprises">{S(lang, "Entreprises", "Companies")}</a>
         <a class="button button--outline" href="#sonotherapie-groupe">{S(lang, "Entre amis ou en famille", "Friends & family")}</a>
       </div>
@@ -637,7 +647,7 @@ def page_ateliers(lang):
     <div class="container split">
       {photo("evjf.jpg", S(lang, "Longue table préparée pour un atelier entre amies, avec miroirs et produits de soin", "Long table set for a workshop with friends, with mirrors and skincare products"), P("evjf.jpg"), "photo--arch")}
       <div>
-        <h2>{S(lang, "Pour un EVJF", "For a hen party")}</h2>
+        <h2>{S(lang, "Pour un EVJF", "For a bachelorette (hen) party")}</h2>
         <p>{S(lang,
             "Offrez à la future mariée et à ses amies un vrai moment de détente, à partager. Je viens dans le lieu de votre choix, partout en Belgique, avec tout le matériel.",
             "Give the bride-to-be and her friends a truly relaxing moment to share. I come to the venue of your choice, anywhere in Belgium, with everything needed.")}</p>
@@ -650,7 +660,7 @@ def page_ateliers(lang):
             "Dites-moi la date, le lieu et le nombre de participantes, et je vous envoie une proposition.",
             "Tell me the date, the place and the number of guests, and I’ll send you a proposal.")}</p>
         <div class="button-group">
-          <a class="button" href="mailto:{EMAIL}?subject={q(S(lang, 'EVJF', 'Hen party'))}">{S(lang, "Organiser un EVJF", "Plan a hen party")}</a>
+          <a class="button" href="mailto:{EMAIL}?subject={q(S(lang, 'EVJF', 'Bachelorette party'))}">{S(lang, "Organiser un EVJF", "Plan a bachelorette party")}</a>
           <a class="button button--outline" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
         </div>
       </div>
@@ -704,7 +714,7 @@ def page_ateliers(lang):
             "You lie down, close your eyes and let the Tibetan bowls do the rest. Lots of people fall asleep, and that’s perfectly fine!")}</p>
         <p>{S(lang,
             "Chez moi à Uccle pour 6 personnes maximum, ou je me déplace partout en Belgique (frais de déplacement en plus). Une chouette idée pour un team building, un EVJF, un week-end en famille ou un anniversaire.",
-            "At my place in Uccle for up to 6 people, or I travel anywhere in Belgium (plus travel costs). A great idea for team building, a hen party, a family weekend or a birthday.")}</p>
+            "At my place in Uccle for up to 6 people, or I travel anywhere in Belgium (plus travel costs). A great idea for team building, a bachelorette party, a family weekend or a birthday.")}</p>
         {reviews(["souches", "copines"], lang)}
         <div class="button-group">
           <a class="button" href="{mailto}">{S(lang, "Demander une date", "Ask for a date")}</a>
@@ -724,7 +734,7 @@ def page_ateliers(lang):
             "I teach you a few simple techniques to relax your face, neck and shoulders that you can keep using at home.")}</p>
         <p>{S(lang,
             "Parfait pour un EVJF, un anniversaire ou un après-midi entre amies. En entreprise, ça marche très bien en team building.",
-            "Perfect for a hen party, a birthday or an afternoon with friends. It also works really well as a company team building.")}</p>
+            "Perfect for a bachelorette party, a birthday or an afternoon with friends. It also works really well as a company team building.")}</p>
         <div class="button-group">
           <a class="button" href="{mailto}">{S(lang, "Organiser un atelier", "Plan a workshop")}</a>
         </div>
@@ -761,9 +771,9 @@ def page_ateliers(lang):
     </div>
   </section>
 '''
-    layout(lang, "ateliers", S(lang, "EVJF, ateliers et bien-être en entreprise", "Hen parties, workshops and corporate wellbeing"),
+    layout(lang, "ateliers", S(lang, "EVJF, ateliers et bien-être en entreprise", "Bachelorette parties, workshops and corporate wellbeing"),
            S(lang, "EVJF bien-être (atelier auto-massage, sound healing), team building et massages en entreprise, ateliers skincare et événements de marque, partout en Belgique.",
-             "Wellbeing hen parties (self-massage workshop, sound healing), team building and massages for companies, skincare workshops and brand events, anywhere in Belgium."),
+             "Wellbeing bachelorette and hen parties (self-massage workshop, sound healing), team building and massages for companies, skincare workshops and brand events, anywhere in Belgium."),
            body)
 
 
@@ -889,7 +899,11 @@ QUIZ_TEXT = {
         "result_eyebrow": "Mon conseil pour vous",
         "book": "Réserver ce soin",
         "details": "Voir le détail",
-        "alt": "Une autre piste&nbsp;:",
+        "up_title": "Envie de prolonger le moment&nbsp;?",
+        "up_line": "Pour vous faire encore plus plaisir&nbsp;:",
+        "down_title": "Envie de quelque chose de plus court&nbsp;?",
+        "down_line": "Une version plus courte, tout aussi douce&nbsp;:",
+        "book_short": "Réserver",
         "call": "Encore un doute&nbsp;? Réservez un appel de 15&nbsp;minutes et on en parle.",
         "call_btn": "Réserver un appel",
         "questions": {
@@ -913,7 +927,11 @@ QUIZ_TEXT = {
         "result_eyebrow": "My suggestion for you",
         "book": "Book this treatment",
         "details": "See details",
-        "alt": "Another idea:",
+        "up_title": "Want to make it last a little longer?",
+        "up_line": "To treat yourself even more:",
+        "down_title": "Prefer something shorter?",
+        "down_line": "A shorter version, just as gentle:",
+        "book_short": "Book",
         "call": "Still not sure? Book a 15-minute call and we’ll talk it through.",
         "call_btn": "Book a call",
         "questions": {
@@ -945,6 +963,8 @@ def page_quiz(lang):
                 "img": prefix + "images/" + s["img"],
                 "book": CALENDLY + "/" + s["cal"],
                 "details": f["soins"] + "#" + s["id"],
+                "minutes": {"1 h": 60, "1 h 30": 90, "2 h": 120}[s["dur"]["fr"]],
+                "euros": int(s["price"].split()[0]),
             } for s in SOINS
         },
         "call": CALENDLY + "/30min",

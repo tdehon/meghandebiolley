@@ -30,30 +30,51 @@
     return 4;
   }
 
-  /* Recommendation rules, based on Meghan's treatment descriptions. To be validated by her. */
+  /* Recommendation rules, based on Meghan's treatment descriptions. To be validated by her.
+     The main pick is what fits the answers best; it is never chosen for its price. */
   function recommend() {
     const a = answers;
-    if (a.reason === "legs") return { main: "massage-drainant", alt: null };
+    if (a.reason === "legs") return "massage-drainant";
 
     const time = Number(a.time);
     const sound = a.sound === "yes" || (a.sound === "maybe" && a.reason === "mind");
-    const curious = a.sound === "maybe"; // not the main pick, but worth suggesting
 
-    if (a.zone === "face") {
-      if (sound && time >= 90) return { main: "visage-sonotherapie", alt: "soin-visage" };
-      if (sound || curious) return { main: "soin-visage", alt: "visage-sonotherapie" };
-      return { main: "soin-visage", alt: time >= 90 ? "corps-visage" : null };
-    }
-
-    if (a.zone === "body") {
-      if (sound && time >= 90) return { main: "corps-sonotherapie", alt: "massage-relaxant" };
-      return { main: "massage-relaxant", alt: sound || curious ? "corps-sonotherapie" : null };
-    }
-
+    if (a.zone === "face") return sound && time >= 90 ? "visage-sonotherapie" : "soin-visage";
+    if (a.zone === "body") return sound && time >= 90 ? "corps-sonotherapie" : "massage-relaxant";
     // Both body and face
-    if (time >= 120) return { main: "duo-corps-visage", alt: "corps-visage" };
-    if (time >= 90) return { main: "corps-visage", alt: sound ? "corps-sonotherapie" : "duo-corps-visage" };
-    return { main: "massage-relaxant", alt: "corps-visage" };
+    if (time >= 120) return "duo-corps-visage";
+    if (time >= 90) return "corps-visage";
+    return "massage-relaxant";
+  }
+
+  /* One second option: a longer treatment ("make it last longer"), or, when the pick
+     is already the longest of its kind, a shorter one. */
+  function secondOption(main) {
+    const curious = answers.sound === "yes" || answers.sound === "maybe";
+    const up = {
+      "massage-relaxant": curious ? "corps-sonotherapie" : "corps-visage",
+      "soin-visage": curious ? "visage-sonotherapie" : "corps-visage",
+      "massage-drainant": "corps-visage",
+      "corps-visage": "duo-corps-visage",
+    };
+    const down = {
+      "duo-corps-visage": "corps-visage",
+      "corps-sonotherapie": "massage-relaxant",
+      "visage-sonotherapie": "soin-visage",
+    };
+    if (up[main]) return { id: up[main], kind: "up" };
+    if (down[main]) return { id: down[main], kind: "down" };
+    return null;
+  }
+
+  function difference(from, to) {
+    const sign = (n) => (n > 0 ? "+" : "−") + Math.abs(n);
+    const parts = [];
+    const dm = to.minutes - from.minutes;
+    const de = to.euros - from.euros;
+    if (dm) parts.push(`${sign(dm)} min`);
+    if (de) parts.push(`${sign(de)} €`);
+    return parts.join(" · ");
   }
 
   function el(tag, attrs = {}, html = "") {
@@ -101,7 +122,7 @@
   }
 
   function renderResult() {
-    const { main, alt } = recommend();
+    const main = recommend();
     const t = data.treatments[main];
     root.replaceChildren();
 
@@ -119,10 +140,21 @@
     card.append(info);
     root.append(card);
 
-    if (alt) {
-      const a = data.treatments[alt];
-      root.append(el("p", { class: "quiz-alt" },
-        `${T.alt} <a class="text-link" href="${a.details}">${a.name}</a> (${a.meta})`));
+    const second = secondOption(main);
+    if (second) {
+      const o = data.treatments[second.id];
+      const box = el("div", { class: "quiz-second quiz-second--" + second.kind });
+      box.append(el("p", { class: "quiz-second-title" }, second.kind === "up" ? T.up_title : T.down_title));
+      const row = el("div", { class: "quiz-second-row" });
+      row.append(el("div", { class: "photo photo--arch" }, `<img src="${o.img}" alt="">`));
+      const txt = el("div");
+      txt.append(el("p", { class: "muted small" }, second.kind === "up" ? T.up_line : T.down_line));
+      txt.append(el("p", { class: "quiz-second-name" }, `<a href="${o.details}">${o.name}</a>`));
+      txt.append(el("p", { class: "meta" }, `<span>${o.meta}</span><span>${difference(t, o)}</span>`));
+      txt.append(el("a", { class: "button button--outline", href: o.book, target: "_blank", rel: "noopener" }, T.book_short));
+      row.append(txt);
+      box.append(row);
+      root.append(box);
     }
 
     root.append(el("p", { class: "quiz-call muted" },

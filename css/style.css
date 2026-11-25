@@ -1505,13 +1505,69 @@ address {
   margin-bottom: 0.5rem;
 }
 
-.quiz-alt {
-  margin: 1.5rem 0 0;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--linen);
-}
-
 .quiz-call {
   margin: 0.75rem 0 0;
   font-size: 0.95rem;
+}
+
+.quiz-second {
+  margin-top: 1.75rem;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  background: var(--cream);
+}
+
+.quiz-second--up {
+  background: var(--sand);
+}
+
+.quiz-second-title {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.quiz-second-row {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.quiz-second-row p {
+  margin-bottom: 0.4rem;
+}
+
+.quiz-second-name {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.quiz-second-name a {
+  text-decoration: none;
+}
+
+.quiz-second-name a:hover {
+  color: var(--clay-dark);
+}
+
+.quiz-second .meta {
+  margin-bottom: 0.6rem;
+}
+
+.quiz-second .button {
+  min-height: 2.4rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+.quiz-second .meta {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.quiz-second .meta span + span::before {
+  content: none;
 }
