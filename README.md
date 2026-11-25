@@ -21,9 +21,9 @@ Les photos sont dans `images/`. Pour en remplacer une, déposez un nouveau fichi
 
 ## Bloc Instagram (accueil)
 
-Les 6 vignettes ne se mettent pas à jour toutes seules (pas de widget, donc pas de cookies ni de pistage). Pour les rafraîchir :
+Les 6 vignettes (les 6 derniers posts au moment de la mise à jour) ne se mettent pas à jour toutes seules (pas de widget, donc pas de cookies ni de pistage). Pour les rafraîchir :
 
-1. Remplacez `images/instagram/1.jpg` à `6.jpg` par de nouvelles photos **carrées** (~640 px), en gardant les mêmes noms. `1.jpg` s'affiche en premier.
+1. Remplacez `images/instagram/1.jpg` à `6.jpg` par de nouvelles photos au format Instagram **4:5** (par ex. 640 × 800 px), en gardant les mêmes noms. `1.jpg` s'affiche en premier.
 2. Si le sujet des photos change, adaptez les descriptions `INSTAGRAM_ALTS` dans `_outils/build.py` puis relancez le script (sinon, aucune autre modification n'est nécessaire).
 
 Chaque vignette renvoie vers le profil @meghandebiolley.

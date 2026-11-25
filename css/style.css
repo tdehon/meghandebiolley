@@ -1607,7 +1607,7 @@ address {
 }
 .insta-grid a {
   display: block;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 12px;
   background: var(--linen);

@@ -426,23 +426,23 @@ def facts(lang):
       </ul>'''
 
 
-# Instagram block on the homepage. Photos are images/instagram/1.jpg to 6.jpg (square)
+# Instagram block on the homepage. Photos are images/instagram/1.jpg to 6.jpg (4:5, like Instagram)
 # and profil.jpg. To refresh them, replace the files; no code change needed.
 # The alt texts below describe the current photos: update them if the subject changes a lot.
 INSTAGRAM_ALTS = [
-    ("Massage relaxant à l’huile chaude", "Warm-oil relaxing massage"),
-    ("Soin signature visage", "Signature facial"),
-    ("EVJF autour d’un atelier auto-massage", "Bachelorette party at a self-massage workshop"),
-    ("Séance de sound healing en groupe", "Group sound healing session"),
-    ("Retraite Éclosion", "Éclosion retreat"),
-    ("Massage du corps et bols tibétains", "Body massage with Tibetan bowls"),
+    ("Massage du visage, avec le texte « Book ce moment pour toi »", "Facial massage, with the words “Book ce moment pour toi”"),
+    ("Portrait de Meghan, « Meghan, 27 ans, passionnée par le bien-être »", "Portrait of Meghan, “Meghan, 27 ans, passionnée par le bien-être”"),
+    ("Coucher de soleil sur une plage, traces de pas dans le sable", "Sunset over a beach, footprints in the sand"),
+    ("Meghan avec son matériel d’atelier skincare, « October & november so far »", "Meghan carrying her skincare workshop kit, “October & november so far”"),
+    ("Mains posées sur le haut du buste pendant un massage", "Hands resting on the upper chest during a massage"),
+    ("Table préparée pour un atelier skincare, avec une note sur les mantras", "Table set for a skincare workshop, with a note about mantras"),
 ]
 
 
 def instagram_block(lang):
     tiles = "".join(
         f'\n        <li><a href="{INSTAGRAM}" target="_blank" rel="noopener">'
-        f'<img src="{{IMG}}instagram/{i}.jpg" alt="{escape(S(lang, fr, en))}" loading="lazy" width="320" height="320"></a></li>'
+        f'<img src="{{IMG}}instagram/{i}.jpg" alt="{escape(S(lang, fr, en))}" loading="lazy" width="320" height="400"></a></li>'
         for i, (fr, en) in enumerate(INSTAGRAM_ALTS, 1))
     return f'''<section class="section section--tight insta">
     <div class="container">
