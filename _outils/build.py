@@ -24,9 +24,10 @@ PHONE_TEL = "+32491368036"
 WHATSAPP = "https://wa.me/32491368036"
 INSTAGRAM = "https://www.instagram.com/meghandebiolley/"
 LINKEDIN = "https://www.linkedin.com/in/meghan-de-biolley/"
-ADDRESS_1 = "Avenue Hamoir 32"
+ADDRESS_1 = "Avenue Hamoir 32"          # legal notice only
+ADDRESS_STREET = "Avenue Hamoir"          # public pages: no house number
 ADDRESS_2 = "1180 Uccle, Bruxelles"
-MAPS = "https://www.google.com/maps/search/?api=1&query=Avenue%20Hamoir%2032%2C%201180%20Uccle"
+MAPS = "https://www.google.com/maps/search/?api=1&query=Avenue%20Hamoir%2C%201180%20Uccle"
 SITE = "https://meghandebiolley.com"
 PODCAST = "https://open.spotify.com/episode/2sFDcMZM7nunfuoGwr982U"
 
@@ -1036,7 +1037,7 @@ def page_contact(lang):
     jsonld = {
         "@context": "https://schema.org", "@type": "HealthAndBeautyBusiness",
         "name": "Meghan de Biolley", "url": SITE + "/", "telephone": PHONE_TEL, "email": EMAIL,
-        "address": {"@type": "PostalAddress", "streetAddress": ADDRESS_1, "postalCode": "1180",
+        "address": {"@type": "PostalAddress", "streetAddress": ADDRESS_STREET, "postalCode": "1180",
                     "addressLocality": "Uccle", "addressRegion": "Bruxelles", "addressCountry": "BE"},
         "sameAs": [INSTAGRAM, LINKEDIN], "paymentAccepted": "Cash, QR code, Invoice",
     }
@@ -1059,7 +1060,8 @@ def page_contact(lang):
       </div>
       <div class="card">
         <h2 class="h3">{S(lang, "Où me trouver", "Where to find me")}</h2>
-        <address>{ADDRESS_1}<br>{ADDRESS_2}</address>
+        <address>{ADDRESS_STREET}<br>{ADDRESS_2}</address>
+        <p class="muted small">{S(lang, "Le numéro exact figure dans votre réservation.", "The exact house number is included in your booking.")}</p>
         <p><a class="text-link" href="{MAPS}" target="_blank" rel="noopener">{S(lang, "Ouvrir dans Google Maps", "Open in Google Maps")}</a></p>
         <p class="muted">{S(lang,
             "Uniquement sur rendez-vous. Parking gratuit dans la rue. Toute séance annulée moins de 48&nbsp;h à l’avance reste due. Paiement en cash, par QR code ou sur facture.",
@@ -1143,7 +1145,8 @@ def page_legal(lang):
 '''
     layout(lang, "legal", S(lang, "Mentions légales", "Legal notice"),
            S(lang, "Mentions légales et politique de confidentialité du site de Meghan de Biolley.",
-             "Legal notice and privacy policy for Meghan de Biolley’s website."), body)
+             "Legal notice and privacy policy for Meghan de Biolley’s website."), body,
+           '\n  <meta name="robots" content="noindex">')
 
 
 for lang in ("fr", "en"):
@@ -1198,7 +1201,7 @@ def page_url(lang, key):
 
 
 today = datetime.date.today().isoformat()
-order = ["home", "soins", "ateliers", "gifts", "quiz", "about", "contact", "legal"]
+order = ["home", "soins", "ateliers", "gifts", "quiz", "about", "contact"]  # legal notice left out on purpose (noindex)
 priority = {"home": "1.0", "soins": "0.9", "ateliers": "0.9", "gifts": "0.8", "quiz": "0.6",
             "about": "0.6", "contact": "0.7", "legal": "0.2"}
 entries = []

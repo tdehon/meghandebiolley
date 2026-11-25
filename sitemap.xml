@@ -98,18 +98,4 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://meghandebiolley.com/contact"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://meghandebiolley.com/en/contact"/>
   </url>
-  <url>
-    <loc>https://meghandebiolley.com/mentions-legales</loc>
-    <lastmod>2026-11-25</lastmod>
-    <priority>0.2</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://meghandebiolley.com/mentions-legales"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://meghandebiolley.com/en/legal-notice"/>
-  </url>
-  <url>
-    <loc>https://meghandebiolley.com/en/legal-notice</loc>
-    <lastmod>2026-11-25</lastmod>
-    <priority>0.2</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://meghandebiolley.com/mentions-legales"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://meghandebiolley.com/en/legal-notice"/>
-  </url>
 </urlset>
