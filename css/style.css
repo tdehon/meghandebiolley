@@ -1570,3 +1570,58 @@ address {
 .quiz-second .meta span + span::before {
   content: none;
 }
+
+/* ---------- Instagram block (homepage) ---------- */
+.insta-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.insta-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: inherit;
+  text-decoration: none;
+}
+.insta-profile img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 3px var(--cream), 0 0 0 4px var(--clay);
+}
+.insta-profile > span { display: flex; flex-direction: column; }
+.insta-profile strong { font-size: 1.05rem; }
+.insta-profile:hover strong { color: var(--clay-dark); }
+.insta-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+.insta-grid a {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--linen);
+}
+.insta-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.insta-grid a:hover img { transform: scale(1.04); opacity: 0.92; }
+@media (min-width: 48rem) {
+  .insta-grid { grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .insta-grid img { transition: none; }
+}

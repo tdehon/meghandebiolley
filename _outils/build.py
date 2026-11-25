@@ -426,6 +426,39 @@ def facts(lang):
       </ul>'''
 
 
+# Instagram block on the homepage. Photos are images/instagram/1.jpg to 6.jpg (square)
+# and profil.jpg. To refresh them, replace the files; no code change needed.
+# The alt texts below describe the current photos: update them if the subject changes a lot.
+INSTAGRAM_ALTS = [
+    ("Massage relaxant à l’huile chaude", "Warm-oil relaxing massage"),
+    ("Soin signature visage", "Signature facial"),
+    ("EVJF autour d’un atelier auto-massage", "Bachelorette party at a self-massage workshop"),
+    ("Séance de sound healing en groupe", "Group sound healing session"),
+    ("Retraite Éclosion", "Éclosion retreat"),
+    ("Massage du corps et bols tibétains", "Body massage with Tibetan bowls"),
+]
+
+
+def instagram_block(lang):
+    tiles = "".join(
+        f'\n        <li><a href="{INSTAGRAM}" target="_blank" rel="noopener">'
+        f'<img src="{{IMG}}instagram/{i}.jpg" alt="{escape(S(lang, fr, en))}" loading="lazy" width="320" height="320"></a></li>'
+        for i, (fr, en) in enumerate(INSTAGRAM_ALTS, 1))
+    return f'''<section class="section section--tight insta">
+    <div class="container">
+      <div class="insta-head">
+        <a class="insta-profile" href="{INSTAGRAM}" target="_blank" rel="noopener">
+          <img src="{{IMG}}instagram/profil.jpg" alt="" width="64" height="64" loading="lazy">
+          <span><strong>@meghandebiolley</strong><span class="muted small">{S(lang, "Suivez-moi sur Instagram", "Follow me on Instagram")}</span></span>
+        </a>
+        {ext(INSTAGRAM, S(lang, "Suivre", "Follow"), "button button--outline")}
+      </div>
+      <ul class="insta-grid">{tiles}
+      </ul>
+    </div>
+  </section>'''
+
+
 def page_home(lang):
     f = FILES[lang]
     P = lambda name: S(lang, "Photo : images/", "Photo: images/") + name
@@ -535,6 +568,8 @@ def page_home(lang):
       </div>
     </div>
   </section>
+
+  {instagram_block(lang)}
 
   <section class="section section--tight">
     <div class="container text-center">

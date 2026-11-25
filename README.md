@@ -16,7 +16,17 @@ Les photos sont dans `images/`. Pour en remplacer une, déposez un nouveau fichi
 | `soin-visage.jpg`, `massage-drainant.jpg`, `massage-relaxant.jpg`, `corps-visage.jpg`, `duo-corps-visage.jpg`, `visage-sonotherapie.jpg`, `corps-sonotherapie.jpg` | Une par soin |
 | `entreprises.jpg`, `atelier-sonotherapie.jpg`, `atelier-auto-massage.jpg`, `eclosion.jpg` | Page Ateliers |
 | `bon-cadeau.jpg` | Page Bons cadeaux |
+| `instagram/1.jpg` à `instagram/6.jpg` + `instagram/profil.jpg` | Accueil, bloc Instagram (voir ci-dessous) |
 | `og-image.jpg` | Aperçu quand le lien est partagé (WhatsApp, Facebook…), 1200×630 |
+
+## Bloc Instagram (accueil)
+
+Les 6 vignettes ne se mettent pas à jour toutes seules (pas de widget, donc pas de cookies ni de pistage). Pour les rafraîchir :
+
+1. Remplacez `images/instagram/1.jpg` à `6.jpg` par de nouvelles photos **carrées** (~640 px), en gardant les mêmes noms. `1.jpg` s'affiche en premier.
+2. Si le sujet des photos change, adaptez les descriptions `INSTAGRAM_ALTS` dans `_outils/build.py` puis relancez le script (sinon, aucune autre modification n'est nécessaire).
+
+Chaque vignette renvoie vers le profil @meghandebiolley.
 
 ## Contenu encore à compléter
 
