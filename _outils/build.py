@@ -1181,4 +1181,35 @@ with open(os.path.join(ROOT, "404.html"), "w", encoding="utf-8") as fh:
 </html>
 ''')
 
+# sitemap.xml + robots.txt: tell search engines which pages exist, in both languages
+import datetime
+
+
+def page_url(lang, key):
+    name = FILES[lang][key]
+    path = "" if name == "index.html" else name[:-len(".html")]
+    return SITE + "/" + ("" if lang == "fr" else "en/") + path
+
+
+today = datetime.date.today().isoformat()
+order = ["home", "soins", "ateliers", "gifts", "quiz", "about", "contact", "legal"]
+priority = {"home": "1.0", "soins": "0.9", "ateliers": "0.9", "gifts": "0.8", "quiz": "0.6",
+            "about": "0.6", "contact": "0.7", "legal": "0.2"}
+entries = []
+for key in order:
+    alternates = "".join(
+        f'\n    <xhtml:link rel="alternate" hreflang="{l}" href="{page_url(l, key)}"/>' for l in ("fr", "en"))
+    for lang in ("fr", "en"):
+        entries.append(f"""  <url>
+    <loc>{page_url(lang, key)}</loc>
+    <lastmod>{today}</lastmod>
+    <priority>{priority[key]}</priority>{alternates}
+  </url>""")
+with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
+    fh.write('<?xml version="1.0" encoding="UTF-8"?>\n'
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+             'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + "\n".join(entries) + "\n</urlset>\n")
+with open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8") as fh:
+    fh.write(f"User-agent: *\nAllow: /\nDisallow: /_outils/\n\nSitemap: {SITE}/sitemap.xml\n")
+
 print("ok")
