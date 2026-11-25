@@ -25,7 +25,7 @@ LINKEDIN = "https://www.linkedin.com/in/meghan-de-biolley/"
 ADDRESS_1 = "Avenue Hamoir 32"
 ADDRESS_2 = "1180 Uccle, Bruxelles"
 MAPS = "https://www.google.com/maps/search/?api=1&query=Avenue%20Hamoir%2032%2C%201180%20Uccle"
-SITE = "https://tdehon.github.io"
+SITE = "https://meghandebiolley.com"
 PODCAST = "https://open.spotify.com/episode/2sFDcMZM7nunfuoGwr982U"
 
 FILES = {
