@@ -13,6 +13,7 @@ import re
 import os
 import sys
 from html import escape
+from urllib.parse import quote
 
 ROOT = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,6 +21,7 @@ CALENDLY = "https://calendly.com/meghandebiolley"
 EMAIL = "meghandebly@gmail.com"
 PHONE_DISPLAY = "+32 491 36 80 36"
 PHONE_TEL = "+32491368036"
+WHATSAPP = "https://wa.me/32491368036"
 INSTAGRAM = "https://www.instagram.com/meghandebiolley/"
 LINKEDIN = "https://www.linkedin.com/in/meghan-de-biolley/"
 ADDRESS_1 = "Avenue Hamoir 32"
@@ -85,6 +87,11 @@ def photo(src, alt, placeholder, cls="", eager=False):
 def video(src, poster, label):
     return (f'<div class="photo photo--arch"><video src="{{IMG}}{src}" poster="{{IMG}}{poster}" '
             f'autoplay muted loop playsinline preload="metadata" aria-label="{escape(label)}"></video></div>')
+
+
+def wa(message):
+    """WhatsApp link that opens a chat with Meghan, message pre-filled."""
+    return WHATSAPP + "?text=" + quote(message)
 
 
 def ext(url, label, cls="button"):
@@ -328,7 +335,7 @@ def layout(lang, key, title, description, body, extra_head=""):
       <div>
         <h2 class="footer-heading">{t["contact_h"]}</h2>
         <ul class="footer-links">
-          <li><a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></li>
+          <li><a href="{WHATSAPP}" target="_blank" rel="noopener">WhatsApp {PHONE_DISPLAY}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
           <li><a href="{INSTAGRAM}" target="_blank" rel="noopener">Instagram</a></li>
           <li><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a></li>
@@ -462,8 +469,8 @@ def page_home(lang):
             "Pour Noël, un anniversaire, une naissance ou juste pour dire merci&nbsp;: un bon cadeau pour le soin de votre choix, en version papier ou électronique.",
             "For Christmas, a birthday, a new baby or just to say thank you: a gift voucher for the treatment of your choice, printed or electronic.")}</p>
         <p class="muted">{S(lang,
-            "Ils se commandent directement auprès de moi, par e-mail, téléphone ou Instagram.",
-            "Order directly from me by email, phone or Instagram.")}</p>
+            "Ils se commandent directement auprès de moi sur WhatsApp et sont valables 6&nbsp;mois.",
+            "Order directly from me on WhatsApp. Vouchers are valid for 6 months.")}</p>
         <div class="button-group">
           <a class="button" href="{f["gifts"]}">{S(lang, "Offrir un bon cadeau", "Give a gift voucher")}</a>
         </div>
@@ -508,8 +515,8 @@ def page_home(lang):
         <ul class="link-list">
           <li><a href="{f["ateliers"]}#evjf">{S(lang, "Pour un EVJF", "For a bachelorette party")}</a></li>
           <li><a href="{f["ateliers"]}#entreprises">{S(lang, "Pour les entreprises", "For companies")}</a></li>
-          <li><a href="{f["ateliers"]}#sonotherapie-groupe">{S(lang, "Sound healing en groupe, 25 € / pers.", "Group sound healing, €25 per person")}</a></li>
-          <li><a href="{f["ateliers"]}#auto-massage">{S(lang, "Atelier auto-massage, 50 € / pers.", "Self-massage workshop, €50 per person")}</a></li>
+          <li><a href="{f["ateliers"]}#sonotherapie-groupe">{S(lang, "Sound healing en groupe", "Group sound healing")}</a></li>
+          <li><a href="{f["ateliers"]}#auto-massage">{S(lang, "Atelier auto-massage", "Self-massage workshop")}</a></li>
         </ul>
       </div>
     </div>
@@ -626,7 +633,9 @@ def page_ateliers(lang):
     f = FILES[lang]
     P = lambda name: S(lang, "Photo : images/", "Photo: images/") + name
     q = lambda t: t.replace(" ", "%20").replace("’", "%27")
-    mailto = f"mailto:{EMAIL}?subject={q(S(lang, 'Atelier', 'Workshop'))}"
+    wa_evjf = wa(S(lang, "Bonjour Meghan, je voudrais organiser un EVJF. Date, lieu et nombre de participantes : ", "Hi Meghan, I’d like to plan a bachelorette party. Date, place and number of guests: "))
+    wa_sound = wa(S(lang, "Bonjour Meghan, je voudrais organiser une séance de sound healing. Date, lieu et nombre de personnes : ", "Hi Meghan, I’d like to plan a sound healing session. Date, place and number of people: "))
+    wa_atelier = wa(S(lang, "Bonjour Meghan, je voudrais organiser un atelier auto-massage. Date, lieu et nombre de personnes : ", "Hi Meghan, I’d like to plan a self-massage workshop. Date, place and number of people: "))
     mailto_corp = f"mailto:{EMAIL}?subject={q(S(lang, 'Demande de devis entreprise', 'Corporate quote request'))}"
     body = f'''
   <section class="page-hero">
@@ -653,15 +662,14 @@ def page_ateliers(lang):
             "Give the bride-to-be and her friends a truly relaxing moment to share. I come to the venue of your choice, anywhere in Belgium, with everything needed.")}</p>
         <p>{S(lang, "Deux formules au choix&nbsp;:", "Two options:")}</p>
         <ul class="link-list">
-          <li><a href="#auto-massage">{S(lang, "Atelier auto-massage, 50 € / pers. + déplacement", "Self-massage workshop, €50 per person + travel")}</a></li>
-          <li><a href="#sonotherapie-groupe">{S(lang, "Sound healing en groupe, 25 € / pers. + déplacement", "Group sound healing, €25 per person + travel")}</a></li>
+          <li><a href="#auto-massage">{S(lang, "Atelier auto-massage", "Self-massage workshop")}</a></li>
+          <li><a href="#sonotherapie-groupe">{S(lang, "Sound healing en groupe", "Group sound healing")}</a></li>
         </ul>
         <p class="muted" style="margin-top:1.25rem">{S(lang,
             "Dites-moi la date, le lieu et le nombre de participantes, et je vous envoie une proposition.",
             "Tell me the date, the place and the number of guests, and I’ll send you a proposal.")}</p>
         <div class="button-group">
-          <a class="button" href="mailto:{EMAIL}?subject={q(S(lang, 'EVJF', 'Bachelorette party'))}">{S(lang, "Organiser un EVJF", "Plan a bachelorette party")}</a>
-          <a class="button button--outline" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
+          {ext(wa_evjf, S(lang, "Organiser un EVJF sur WhatsApp", "Plan it on WhatsApp"))}
         </div>
       </div>
     </div>
@@ -708,7 +716,6 @@ def page_ateliers(lang):
       {photo("atelier-sonotherapie.jpg", S(lang, "Séance de sound healing en groupe : Meghan joue d’un bol au-dessus des participantes allongées", "Group sound healing: Meghan plays a bowl above participants lying down"), P("atelier-sonotherapie.jpg"), "photo--arch")}
       <div>
         <h2>{S(lang, "Sound healing en groupe", "Group sound healing")}</h2>
-        <p class="price-tag"><strong>{S(lang, "25 €", "€25")}</strong>{S(lang, "par personne", "per person")}</p>
         <p>{S(lang,
             "On s’allonge, on ferme les yeux, et on laisse les bols tibétains faire le reste. Beaucoup de gens s’endorment, et c’est très bien comme ça&nbsp;!",
             "You lie down, close your eyes and let the Tibetan bowls do the rest. Lots of people fall asleep, and that’s perfectly fine!")}</p>
@@ -717,7 +724,7 @@ def page_ateliers(lang):
             "At my place in Uccle for up to 6 people, or I travel anywhere in Belgium (plus travel costs). A great idea for team building, a bachelorette party, a family weekend or a birthday.")}</p>
         {reviews(["souches", "copines"], lang)}
         <div class="button-group">
-          <a class="button" href="{mailto}">{S(lang, "Demander une date", "Ask for a date")}</a>
+          {ext(wa_sound, S(lang, "Demander une date sur WhatsApp", "Ask for a date on WhatsApp"))}
         </div>
       </div>
     </div>
@@ -728,7 +735,6 @@ def page_ateliers(lang):
       {photo("atelier-auto-massage.jpg", S(lang, "Meghan montre un geste de massage du visage pendant un atelier", "Meghan showing a facial massage technique during a workshop"), P("atelier-auto-massage.jpg"), "photo--arch")}
       <div>
         <h2>{S(lang, "Atelier auto-massage", "Self-massage workshop")}</h2>
-        <p class="price-tag"><strong>{S(lang, "50 €", "€50")}</strong>{S(lang, "par personne + déplacement", "per person + travel")}</p>
         <p>{S(lang,
             "Je vous apprends quelques gestes simples pour détendre le visage, la nuque et les épaules, que vous pourrez refaire à la maison.",
             "I teach you a few simple techniques to relax your face, neck and shoulders that you can keep using at home.")}</p>
@@ -736,7 +742,7 @@ def page_ateliers(lang):
             "Parfait pour un EVJF, un anniversaire ou un après-midi entre amies. En entreprise, ça marche très bien en team building.",
             "Perfect for a bachelorette party, a birthday or an afternoon with friends. It also works really well as a company team building.")}</p>
         <div class="button-group">
-          <a class="button" href="{mailto}">{S(lang, "Organiser un atelier", "Plan a workshop")}</a>
+          {ext(wa_atelier, S(lang, "Organiser un atelier sur WhatsApp", "Plan a workshop on WhatsApp"))}
         </div>
       </div>
     </div>
@@ -765,8 +771,8 @@ def page_ateliers(lang):
           "Dites-moi la date, le lieu et le nombre de personnes, et je vous envoie une proposition.",
           "Tell me the date, the place and how many people, and I’ll send you a proposal.")}</p>
       <div class="button-group button-group--center">
-        <a class="button" href="{mailto}">{EMAIL}</a>
-        <a class="button button--outline" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
+        {ext(wa(S(lang, "Bonjour Meghan, ", "Hi Meghan, ")), S(lang, "Écrire sur WhatsApp", "Message me on WhatsApp"))}
+        <a class="button button--outline" href="{mailto_corp}">{S(lang, "Entreprises&nbsp;: par e-mail", "Companies: by email")}</a>
       </div>
     </div>
   </section>
@@ -834,8 +840,8 @@ def page_about(lang):
 def page_gifts(lang):
     f = FILES[lang]
     P = lambda name: S(lang, "Photo : images/", "Photo: images/") + name
-    subject = S(lang, "Bon cadeau", "Gift voucher").replace(" ", "%20")
-    mailto = f"mailto:{EMAIL}?subject={subject}"
+    wa_gift = wa(S(lang, "Bonjour Meghan, je voudrais commander un bon cadeau pour ", "Hi Meghan, I’d like to order a gift voucher for "))
+    mailto_corp = f"mailto:{EMAIL}?subject=" + quote(S(lang, "Bons cadeaux entreprise", "Corporate gift vouchers"))
     body = f'''
   <section class="page-hero">
     <div class="container split">
@@ -845,11 +851,11 @@ def page_gifts(lang):
             "Pour un anniversaire, une naissance, la fête des mères ou juste pour dire merci&nbsp;: tous les soins peuvent être offerts.",
             "For a birthday, a new baby, Mother’s Day or just to say thank you: every treatment can be given as a gift.")}</p>
         <p>{S(lang,
-            "Les bons se commandent directement auprès de moi, par e-mail, téléphone ou Instagram. Dites-moi quel soin vous voulez offrir et si vous préférez un bon papier ou un bon électronique (envoyé par e-mail, pratique pour les cadeaux de dernière minute). Paiement en cash, par QR code ou sur facture.",
-            "Vouchers are ordered directly from me by email, phone or Instagram. Tell me which treatment you’d like to give and whether you prefer a printed voucher or an electronic one (sent by email, handy for last-minute gifts). Payment by cash, QR code or invoice.")}</p>
+            "Les bons se commandent directement auprès de moi, sur WhatsApp. Dites-moi quel soin vous voulez offrir et si vous préférez un bon papier ou un bon électronique (pratique pour les cadeaux de dernière minute). Paiement en cash, par QR code ou sur facture.",
+            "Vouchers are ordered directly from me on WhatsApp. Tell me which treatment you’d like to give and whether you prefer a printed voucher or an electronic one (handy for last-minute gifts). Payment by cash, QR code or invoice.")}</p>
+        <p class="price-tag"><span>{S(lang, "Valable", "Valid for")}</span><strong>{S(lang, "6 mois", "6 months")}</strong></p>
         <div class="button-group">
-          <a class="button" href="{mailto}">{S(lang, "Commander par e-mail", "Order by email")}</a>
-          <a class="button button--outline" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
+          {ext(wa_gift, S(lang, "Commander sur WhatsApp", "Order on WhatsApp"))}
           {ext(INSTAGRAM, "Instagram", "button button--outline")}
         </div>
       </div>
@@ -869,7 +875,7 @@ def page_gifts(lang):
             "Pour une surprise de dernière minute, la version électronique est aussi possible.",
             "For a last-minute surprise, an electronic version is also available.")}</p>
         <div class="button-group">
-          <a class="button" href="{mailto}">{S(lang, "Commander un bon cadeau", "Order a gift voucher")}</a>
+          {ext(wa_gift, S(lang, "Commander sur WhatsApp", "Order on WhatsApp"))}
         </div>
       </div>
     </div>
@@ -880,8 +886,8 @@ def page_gifts(lang):
       <h2>{S(lang, "Les soins à offrir", "Treatments to give")}</h2>
       <ul class="menu">{price_menu(lang, f["soins"])}</ul>
       <p class="muted small" style="margin-top:1.5rem">{S(lang,
-          "Vous voulez offrir des bons à votre équipe ou à vos clients&nbsp;? C’est possible aussi, avec facture.",
-          "Want to give vouchers to your team or clients? That works too, with an invoice.")}</p>
+          "Vous voulez offrir des bons à votre équipe ou à vos clients&nbsp;? C’est possible aussi, avec facture&nbsp;: <a class='text-link' href='" + mailto_corp + "'>écrivez-moi par e-mail</a>.",
+          "Want to give vouchers to your team or clients? That works too, with an invoice: <a class='text-link' href='" + mailto_corp + "'>email me</a>.")}</p>
     </div>
   </section>
 '''
@@ -1003,10 +1009,10 @@ def page_quiz(lang):
 FAQ = {
     "fr": [
         ("Quel soin choisir&nbsp;?", "Le <a class=\"text-link\" href=\"quel-soin.html\">petit questionnaire</a> vous propose un soin en quatre questions, et les descriptions de la page <a class=\"text-link\" href=\"soins.html\">Les soins</a> vous aideront à y voir plus clair. Si vous hésitez encore, réservez un appel questions-réponses ou écrivez-moi sur Instagram&nbsp;: nous trouverons ensemble le soin le plus adapté."),
-        ("Comment réserver&nbsp;?", f"Les soins individuels se réservent en ligne via <a class=\"text-link\" href=\"{CALENDLY}\" target=\"_blank\" rel=\"noopener\">mon calendrier Calendly</a>. Pour un atelier ou une séance de groupe, contactez-moi par e-mail ou par téléphone."),
+        ("Comment réserver&nbsp;?", f"Les soins individuels se réservent en ligne via <a class=\"text-link\" href=\"{CALENDLY}\" target=\"_blank\" rel=\"noopener\">mon calendrier Calendly</a>. Pour un atelier, un EVJF ou une séance de groupe, écrivez-moi sur WhatsApp (ou par e-mail pour les entreprises)."),
         ("Comment me préparer à la séance&nbsp;?", "Le parking est gratuit dans la rue. Les soins qui incluent le visage et le cuir chevelu peuvent légèrement huiler les cheveux&nbsp;: mieux vaut ne pas prévoir d’événement important juste après."),
         ("Le soin visage est-il un soin esthétique&nbsp;?", "Non&nbsp;: il n’y a pas d’extraction. Il s’agit d’un massage du visage relaxant, liftant et sculptant, qui apporte un bel éclat et un effet lifté. Pour des résultats plus durables, une cure de 5 séances à tarif avantageux est possible."),
-        ("Puis-je offrir un soin&nbsp;?", "Oui&nbsp;! Les bons cadeaux existent en version papier ou électronique. Tout est expliqué sur la page <a class=\"text-link\" href=\"bons-cadeaux.html\">Bons cadeaux</a>."),
+        ("Puis-je offrir un soin&nbsp;?", "Oui&nbsp;! Les bons cadeaux existent en version papier ou électronique et sont valables 6&nbsp;mois. Tout est expliqué sur la page <a class=\"text-link\" href=\"bons-cadeaux.html\">Bons cadeaux</a>."),
         ("Dans quelles langues se déroulent les soins&nbsp;?", "En français, en néerlandais ou en anglais, selon votre préférence."),
         ("Puis-je annuler ou déplacer mon rendez-vous&nbsp;?", "Oui, en me prévenant au moins 48&nbsp;heures à l’avance. Toute séance annulée moins de 48&nbsp;h à l’avance reste due."),
         ("Quels sont les moyens de paiement&nbsp;?", "Vous pouvez régler en espèces, par QR code ou sur facture."),
@@ -1014,10 +1020,10 @@ FAQ = {
     ],
     "en": [
         ("Which treatment should I choose?", "The <a class=\"text-link\" href=\"which-treatment.html\">short questionnaire</a> suggests a treatment in four questions, and the descriptions on the <a class=\"text-link\" href=\"treatments.html\">Treatments</a> page will help. If you’re still unsure, book a Q&amp;A call or message me on Instagram and we’ll find the right treatment together."),
-        ("How do I book?", f"One-to-one treatments are booked online through <a class=\"text-link\" href=\"{CALENDLY}\" target=\"_blank\" rel=\"noopener\">my Calendly page</a>. For a workshop or group session, please get in touch by email or phone."),
+        ("How do I book?", f"One-to-one treatments are booked online through <a class=\"text-link\" href=\"{CALENDLY}\" target=\"_blank\" rel=\"noopener\">my Calendly page</a>. For a workshop, a bachelorette party or a group session, message me on WhatsApp (or by email for companies)."),
         ("How should I prepare?", "Street parking is free. Treatments that include the face and scalp may leave your hair slightly oily, so it’s best not to plan anything important straight afterwards."),
         ("Is the facial a beauty treatment?", "No extractions are involved: it’s a relaxing, lifting and sculpting facial massage that leaves you with a lovely glow and a lifted look. For longer-lasting results, a course of 5 sessions at a reduced rate is available."),
-        ("Can I give a treatment as a gift?", "Yes! Gift vouchers come in printed or electronic form. See the <a class=\"text-link\" href=\"gift-vouchers.html\">Gift vouchers</a> page for details."),
+        ("Can I give a treatment as a gift?", "Yes! Gift vouchers come in printed or electronic form and are valid for 6 months. See the <a class=\"text-link\" href=\"gift-vouchers.html\">Gift vouchers</a> page for details."),
         ("Which languages do you speak?", "French, Dutch and English: whichever you prefer."),
         ("Can I cancel or reschedule?", "Yes, with at least 48 hours’ notice. Sessions cancelled less than 48 hours in advance are charged in full."),
         ("How can I pay?", "Cash, QR code or invoice."),
@@ -1041,12 +1047,12 @@ def page_contact(lang):
     <div class="container split split--top">
       <div>
         <h1>Contact</h1>
-        <p class="lead">{S(lang, "Le plus simple pour réserver, c’est en ligne. Pour une question, un atelier ou un bon cadeau, écrivez-moi ou appelez-moi.",
-                           "The easiest way to book is online. For a question, a workshop or a gift voucher, message or call me.")}</p>
+        <p class="lead">{S(lang, "Le plus simple pour réserver, c’est en ligne. Pour une question, un atelier ou un bon cadeau, écrivez-moi sur WhatsApp. Pour les entreprises, l’e-mail est parfait.",
+                           "The easiest way to book is online. For a question, a workshop or a gift voucher, message me on WhatsApp. For companies, email works best.")}</p>
         <ul class="contact-list">
           <li><span>{S(lang, "Réserver", "Book")}</span><a href="{CALENDLY}" target="_blank" rel="noopener">calendly.com/meghandebiolley</a></li>
-          <li><span>{S(lang, "Téléphone", "Phone")}</span><a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></li>
-          <li><span>E-mail</span><a href="mailto:{EMAIL}">{EMAIL}</a></li>
+          <li><span>WhatsApp</span><a href="{WHATSAPP}" target="_blank" rel="noopener">{PHONE_DISPLAY}</a></li>
+          <li><span>{S(lang, "Entreprises", "Companies")}</span><a href="mailto:{EMAIL}">{EMAIL}</a></li>
           <li><span>Instagram</span><a href="{INSTAGRAM}" target="_blank" rel="noopener">@meghandebiolley</a></li>
           <li><span>LinkedIn</span><a href="{LINKEDIN}" target="_blank" rel="noopener">Meghan de Biolley</a></li>
         </ul>
@@ -1078,13 +1084,13 @@ def page_contact(lang):
 
 
 def page_legal(lang):
-    todo_bce = f'<span class="todo">{S(lang, "à compléter", "to be added")}</span>'
+    bce = "BE 1021.898.760"
     if lang == "fr":
         content = f'''
       <h2>Éditrice du site</h2>
       <p>Meghan de Biolley, praticienne indépendante en massages et soins bien-être<br>
       {ADDRESS_1}, {ADDRESS_2}, Belgique<br>
-      Numéro d’entreprise (BCE)&nbsp;: {todo_bce}<br>
+      Numéro d’entreprise (BCE)&nbsp;: {bce}<br>
       E-mail&nbsp;: <a href="mailto:{EMAIL}">{EMAIL}</a><br>
       Téléphone&nbsp;: <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></p>
 
@@ -1098,7 +1104,7 @@ def page_legal(lang):
       <p>Les textes, photographies et éléments graphiques de ce site sont la propriété de Meghan de Biolley, sauf mention contraire. Toute reproduction sans autorisation préalable est interdite.</p>
 
       <h2>Données personnelles</h2>
-      <p>Ce site ne contient aucun formulaire et ne dépose aucun cookie de suivi. Les données que vous transmettez par e-mail, téléphone ou Instagram sont utilisées uniquement pour répondre à votre demande et organiser votre rendez-vous, et ne sont jamais cédées à des tiers.</p>
+      <p>Ce site ne contient aucun formulaire et ne dépose aucun cookie de suivi. Les données que vous transmettez par WhatsApp, e-mail, téléphone ou Instagram sont utilisées uniquement pour répondre à votre demande et organiser votre rendez-vous, et ne sont jamais cédées à des tiers.</p>
       <p>La prise de rendez-vous en ligne s’effectue sur Calendly, service tiers soumis à sa propre politique de confidentialité. Les polices de caractères du site sont chargées depuis Google Fonts.</p>
       <p>Conformément au RGPD, vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>'''
     else:
@@ -1106,7 +1112,7 @@ def page_legal(lang):
       <h2>Site publisher</h2>
       <p>Meghan de Biolley, independent massage and wellbeing practitioner<br>
       {ADDRESS_1}, {ADDRESS_2}, Belgium<br>
-      Company number (BCE/KBO): {todo_bce}<br>
+      Company number (BCE/KBO): {bce}<br>
       Email: <a href="mailto:{EMAIL}">{EMAIL}</a><br>
       Phone: <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></p>
 
@@ -1120,7 +1126,7 @@ def page_legal(lang):
       <p>The texts, photographs and graphics on this site belong to Meghan de Biolley unless stated otherwise. Reproduction without prior permission is prohibited.</p>
 
       <h2>Personal data</h2>
-      <p>This site has no forms and sets no tracking cookies. Information you send by email, phone or Instagram is used only to answer your request and arrange your appointment, and is never shared with third parties.</p>
+      <p>This site has no forms and sets no tracking cookies. Information you send by WhatsApp, email, phone or Instagram is used only to answer your request and arrange your appointment, and is never shared with third parties.</p>
       <p>Online booking is handled by Calendly, a third-party service with its own privacy policy. The site’s fonts are loaded from Google Fonts.</p>
       <p>Under the GDPR, you can request access to, correction or deletion of your data by writing to <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>'''
     body = f'''

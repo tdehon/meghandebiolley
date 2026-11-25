@@ -20,7 +20,7 @@ Les photos sont dans `images/`. Pour en remplacer une, déposez un nouveau fichi
 
 ## Contenu encore à compléter
 
-Cherchez `class="todo"` dans les fichiers HTML : numéro BCE (`mentions-legales.html`, `en/legal-notice.html`). Supprimez la classe `todo` une fois le texte remplacé.
+Rien de bloquant : le numéro BCE et la validité des bons (6 mois) sont en place. Reste le crédit photo, voir ci-dessous.
 
 ## Modifier le contenu (prix, textes, avis)
 
@@ -56,4 +56,4 @@ Sous le conseil principal, une 2e option est toujours proposée :
 ## Questions à poser à Meghan
 
 - Ateliers et séances de groupe : combien de temps durent-ils (sound healing, auto-massage, ateliers skincare) ? Y a-t-il un nombre minimum de participants ?
-- Photos : certaines photos du site ont-elles été prises par un ou une photographe ? Si oui, qui, et faut-il créditer son nom (mentions légales ou sous la photo) ?
+- Photos : nom du ou de la photographe à créditer (Meghan se renseigne) — à ajouter dans les mentions légales.
