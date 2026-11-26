@@ -47,8 +47,8 @@
     return "massage-relaxant";
   }
 
-  /* One second option: a longer treatment ("make it last longer"), or, when the pick
-     is already the longest of its kind, a shorter one. */
+  /* Second option, only to make the moment last longer (never a cheaper one).
+     None when the pick is already the longest of its kind. */
   function secondOption(main) {
     const curious = answers.sound === "yes" || answers.sound === "maybe";
     const up = {
@@ -57,24 +57,7 @@
       "massage-drainant": "corps-visage",
       "corps-visage": "duo-corps-visage",
     };
-    const down = {
-      "duo-corps-visage": "corps-visage",
-      "corps-sonotherapie": "massage-relaxant",
-      "visage-sonotherapie": "soin-visage",
-    };
-    if (up[main]) return { id: up[main], kind: "up" };
-    if (down[main]) return { id: down[main], kind: "down" };
-    return null;
-  }
-
-  function difference(from, to) {
-    const sign = (n) => (n > 0 ? "+" : "−") + Math.abs(n);
-    const parts = [];
-    const dm = to.minutes - from.minutes;
-    const de = to.euros - from.euros;
-    if (dm) parts.push(`${sign(dm)} min`);
-    if (de) parts.push(`${sign(de)} €`);
-    return parts.join(" · ");
+    return up[main] || null;
   }
 
   function el(tag, attrs = {}, html = "") {
@@ -142,15 +125,15 @@
 
     const second = secondOption(main);
     if (second) {
-      const o = data.treatments[second.id];
-      const box = el("div", { class: "quiz-second quiz-second--" + second.kind });
-      box.append(el("p", { class: "quiz-second-title" }, second.kind === "up" ? T.up_title : T.down_title));
+      const o = data.treatments[second];
+      const box = el("div", { class: "quiz-second quiz-second--up" });
+      box.append(el("p", { class: "quiz-second-title" }, T.up_title));
       const row = el("div", { class: "quiz-second-row" });
       row.append(el("div", { class: "photo photo--arch" }, `<img src="${o.img}" alt="">`));
       const txt = el("div");
-      txt.append(el("p", { class: "muted small" }, second.kind === "up" ? T.up_line : T.down_line));
+      txt.append(el("p", { class: "muted small" }, T.up_line));
       txt.append(el("p", { class: "quiz-second-name" }, `<a href="${o.details}">${o.name}</a>`));
-      txt.append(el("p", { class: "meta" }, `<span>${o.meta}</span><span>${difference(t, o)}</span>`));
+      txt.append(el("p", { class: "meta" }, o.meta));
       txt.append(el("a", { class: "button button--outline", href: o.book, target: "_blank", rel: "noopener" }, T.book_short));
       row.append(txt);
       box.append(row);
